@@ -1451,14 +1451,7 @@ footer {
         <a href="https://www.coursera.org/account/accomplishments/verify/3D418F5KCNTD" target="_blank" class="cert-verify">Verify credential</a>
       </div>
     </div>
-    <div class="cert-card fade-up">
-      <div class="cert-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="var(--accent)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>
-      <div class="cert-body">
-        <div class="cert-name">Data Science Internship Certificate</div>
-        <div class="cert-issuer">Kodnest</div>
-        <a href="https://drive.google.com/file/d/1ffSAIJD2KhXgiW37cbGch8IS4D4kMmY5/view?usp=sharing" target="_blank" class="cert-verify">Verify credential</a>
-      </div>
-    </div>
+
   </div>
 </section>
 
@@ -1566,7 +1559,6 @@ const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
 document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
-
 
 // ─── Smooth active nav ───
 const sections = document.querySelectorAll('section');
