@@ -1,0 +1,173 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   ARGUS design system — HUD layer on top of base.css
+   Palette: near-black base · ice-cyan accent · amber reserved for detections
+   ═══════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --net-rgb: var(--accent-rgb);       /* neural background colour (bone-white in X-ray) */
+  --hud-line: rgba(var(--accent-rgb), 0.35);
+  --hud-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* ─── Accessibility basics ─── */
+.skip-link {
+  position: fixed; left: 16px; top: -60px; z-index: 10001;
+  padding: 10px 16px; border-radius: 8px;
+  background: var(--accent); color: var(--on-accent);
+  font: 500 0.85rem/1 var(--mono);
+  transition: top 0.2s;
+}
+.skip-link:focus { top: 12px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+html.has-reticle :focus-visible { outline-color: transparent; } /* the reticle frames focus instead */
+html.has-reticle input:focus-visible, html.has-reticle textarea:focus-visible { outline-color: var(--accent); }
+
+/* ─── Lenis ─── */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* ─── Re-tuned base pieces ─── */
+#typewriter-text { background-image: linear-gradient(120deg, var(--accent), var(--accent2), var(--accent)); }
+.section-title, .hero-name, .big-text { position: relative; }
+.nav-links a { position: relative; }
+.nav-links a.is-active { color: var(--text); }
+.nav-links a.is-active::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -8px; height: 1px;
+  background: var(--accent); box-shadow: 0 0 8px var(--accent);
+}
+.exp-badge.done { background: rgba(var(--accent-rgb), 0.08); color: var(--accent); border-color: rgba(var(--accent-rgb), 0.22); }
+.status-pill { color: var(--text2); }
+/* Amber is reserved for detections, so these move to the accent */
+.hero-label { color: var(--accent); }
+.featured-badge { color: var(--accent); background: rgba(var(--accent-rgb), 0.08); border-color: rgba(var(--accent-rgb), 0.2); }
+footer { padding-bottom: 88px; }
+
+/* Section labels become HUD sector tags: "02 // About me" */
+main { counter-reset: sector; }
+main > section { counter-increment: sector; }
+.section-label::before {
+  content: counter(sector, decimal-leading-zero) ' //';
+  width: auto; height: auto; background: none;
+  color: var(--text3);
+}
+
+/* ─── Neural background ─── */
+#neural-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+/* ─── Text decode ─── */
+.is-scrambling > .scramble-src { visibility: hidden; }
+.scramble-layer { position: absolute; inset: 0; pointer-events: none; }
+
+/* ─── Targeting reticle ─── */
+html.has-reticle, html.has-reticle * { cursor: none !important; }
+#reticle { position: fixed; inset: 0; pointer-events: none; z-index: 10000; transition: opacity 0.2s; }
+#reticle.is-hidden { opacity: 0; }
+.rt-c {
+  --s: 9px;
+  position: absolute; left: 0; top: 0; width: var(--s); height: var(--s);
+  border: 1.5px solid var(--accent);
+  will-change: transform;
+  transition: width 0.2s, height 0.2s, border-color 0.2s;
+}
+.rt-c0 { border-right: 0; border-bottom: 0; }
+.rt-c1 { border-left: 0; border-bottom: 0; margin-left: calc(var(--s) * -1); }
+.rt-c2 { border-right: 0; border-top: 0; margin-top: calc(var(--s) * -1); }
+.rt-c3 { border-left: 0; border-top: 0; margin: calc(var(--s) * -1) 0 0 calc(var(--s) * -1); }
+.is-locked .rt-c { --s: 12px; border-color: var(--accent-warm); }
+.rt-dot {
+  position: absolute; left: -2px; top: -2px; width: 4px; height: 4px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 8px var(--accent); will-change: transform;
+}
+.rt-label {
+  position: absolute; left: 0; top: 0; white-space: nowrap;
+  padding: 3px 6px 2px; border-radius: 2px;
+  font: 500 10px/1.2 var(--mono); letter-spacing: 0.06em;
+  background: var(--accent-warm); color: #1a1000;
+  opacity: 0; transition: opacity 0.15s;
+}
+.is-locked .rt-label { opacity: 1; }
+
+/* ─── HUD frame (desktop) ─── */
+#hud {
+  position: fixed; inset: 0; z-index: 90; pointer-events: none;
+  font: 400 10px/1 var(--mono); letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text3);
+}
+.hud-corner { position: absolute; width: 18px; height: 18px; border: 1px solid var(--hud-line); }
+.hud-corner.tl { top: calc(var(--nav-h) + 12px); left: 12px; border-right: 0; border-bottom: 0; }
+.hud-corner.tr { top: calc(var(--nav-h) + 12px); right: 12px; border-left: 0; border-bottom: 0; }
+.hud-corner.bl { bottom: 12px; left: 12px; border-right: 0; border-top: 0; }
+.hud-corner.br { bottom: 12px; right: 12px; border-left: 0; border-top: 0; }
+.hud-top { position: absolute; top: calc(var(--nav-h) + 17px); left: 40px; display: flex; gap: 16px; }
+.hud-live { color: var(--accent); display: inline-flex; align-items: center; gap: 6px; }
+.hud-live::before {
+  content: ''; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 6px var(--accent);
+  animation: pulse 2s infinite;
+}
+.hud-bottom { position: absolute; bottom: 17px; right: 40px; display: flex; gap: 16px; }
+.hud-tape { position: absolute; right: 14px; top: 25vh; height: 50vh; width: 18px; }
+.hud-tape-track {
+  position: absolute; inset: 0; overflow: hidden;
+  -webkit-mask-image: linear-gradient(transparent, #000 18%, #000 82%, transparent);
+  mask-image: linear-gradient(transparent, #000 18%, #000 82%, transparent);
+}
+.hud-tape-scale {
+  position: absolute; left: 0; right: 0; top: -40px; bottom: -40px; will-change: transform;
+  background:
+    repeating-linear-gradient(to bottom, rgba(var(--accent-rgb), 0.55) 0 1px, transparent 1px 40px) right top / 14px 100% no-repeat,
+    repeating-linear-gradient(to bottom, rgba(var(--accent-rgb), 0.28) 0 1px, transparent 1px 8px) right top / 7px 100% no-repeat;
+}
+.hud-alt { position: absolute; right: 22px; top: 12px; will-change: transform; }
+.hud-alt-label {
+  display: block; white-space: nowrap; padding: 3px 6px; color: var(--accent);
+  border: 1px solid var(--hud-line); background: rgba(5, 7, 10, 0.6);
+}
+.hud-alt-label::after {
+  content: ''; position: absolute; right: -9px; top: 50%; width: 8px; height: 1px; background: var(--accent);
+}
+@media (max-width: 1099px) { #hud { display: none; } }
+
+/* ─── Control dock ─── */
+#dock {
+  position: fixed; left: 16px; bottom: 16px; z-index: 95;
+  display: flex; gap: 4px; padding: 5px;
+  border: 1px solid var(--border2); border-radius: 12px;
+  background: rgba(5, 7, 10, 0.78);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+}
+[data-theme="light"] #dock { background: rgba(243, 246, 248, 0.85); }
+#dock:empty { display: none; }
+.dock-btn {
+  display: inline-flex; align-items: center; gap: 7px; min-height: 34px;
+  padding: 8px 10px; border-radius: 8px; border: 1px solid transparent;
+  background: transparent; color: var(--text2);
+  font: 500 11px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.dock-btn:hover { color: var(--text); border-color: var(--border2); }
+.dock-btn[aria-pressed="true"] { color: var(--text); background: rgba(var(--accent-rgb), 0.07); }
+.dock-led { width: 6px; height: 6px; border-radius: 50%; background: var(--text3); transition: background 0.2s, box-shadow 0.2s; }
+.dock-btn[aria-pressed="true"] .dock-led { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+.dock-btn kbd {
+  font: inherit; font-size: 9px; padding: 2px 4px; border-radius: 4px;
+  border: 1px solid var(--border2); color: var(--text3);
+}
+@media (max-width: 759px) {
+  #dock { left: 10px; bottom: 10px; }
+  .dock-btn kbd { display: none; }
+}
+
+/* Magnetic buttons ease back smoothly */
+.magnetic { transition: translate 0.35s var(--hud-ease), background var(--transition), color var(--transition), border-color var(--transition), transform var(--transition), box-shadow var(--transition); }
+
+/* ─── Intro shell (hidden unless the boot script marked it pending) ─── */
+#intro, .intro-skip { display: none; }
+
+/* ─── Reduced motion: static or fade-only ─── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .fade-up { transform: none; transition: opacity 0.4s ease; }
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; }
+}
