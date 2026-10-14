@@ -14,6 +14,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/hud.css">
+<link rel="stylesheet" href="css/argus.css">
 <script>
 /* Boot flags, set before first paint: .js gates scroll-reveal styles; .intro-pending shows the
    ARGUS materialization once per session (never with reduced motion or calm mode). A watchdog
@@ -38,9 +39,7 @@
 
 <!-- ARGUS materialization intro (driven by js/argus/intro.js) -->
 <div id="intro" aria-hidden="true">
-  <canvas id="intro-canvas"></canvas>
-  <div class="intro-frame"><i></i><i></i><i></i><i></i></div>
-  <pre class="boot-log"></pre>
+  <div class="boot-log"><div class="boot-head">ARGUS v2.6 :: vision core <span class="boot-blink">initializing</span></div></div>
   <div class="intro-target"><span class="intro-target-label"></span></div>
 </div>
 <button id="intro-skip" class="intro-skip" type="button">Skip intro <kbd>Esc</kbd></button>

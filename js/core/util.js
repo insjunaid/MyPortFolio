@@ -2,6 +2,7 @@ export const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 export const lerp = (a, b, t) => a + (b - a) * t;
 export const rand = (a = 1, b) => (b === undefined ? Math.random() * a : a + Math.random() * (b - a));
 export const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 export const qs = (s, root = document) => root.querySelector(s);
 export const qsa = (s, root = document) => [...root.querySelectorAll(s)];
 

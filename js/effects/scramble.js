@@ -4,11 +4,20 @@
 import { addTask } from '../core/loop.js';
 import { qsa } from '../core/util.js';
 
-const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&*+=<>/\\[]{}';
+// Glyphs keep the case of the character they stand in for, so the decoding text keeps roughly
+// the same width and doesn't spill onto extra lines.
+const UPPER = 'ABCDEFGHKMNOPRSTUVXYZ#%&@';
+const LOWER = 'abcdeghknoprsuvxyz<>=+*';
+const DIGIT = '0123456789';
+const glyphFor = (ch) => {
+  const set = /[0-9]/.test(ch) ? DIGIT : ch !== ch.toUpperCase() ? LOWER : UPPER;
+  return set[(Math.random() * set.length) | 0];
+};
 
 export function scramble(el, { duration = 900, delay = 0 } = {}) {
   if (!el || el.__scrambling) return Promise.resolve();
   el.__scrambling = true;
+  if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
   let src = el.querySelector(':scope > .scramble-src');
   if (!src) {
     src = document.createElement('span');
@@ -47,7 +56,7 @@ export function scramble(el, { duration = 900, delay = 0 } = {}) {
         for (let i = 0; i < it.text.length; i++) {
           const ch = it.text[i];
           if (ch === ' ' || ch === '\n' || el2 >= it.at[i]) s += ch;
-          else { s += GLYPHS[(Math.random() * GLYPHS.length) | 0]; done = false; }
+          else { s += glyphFor(ch); done = false; }
         }
         it.node.nodeValue = s;
       }
