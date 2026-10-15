@@ -1,5 +1,5 @@
 /* ─── CSS Variables ─── */
-:root {
+:root, .xr-off { /* .xr-off re-declares the normal tokens inside the X-ray lens */
   /* Base: near-black with a cold blue cast (defense / aerospace HUD) */
   --bg: #05070a;
   --bg2: #080c11;
@@ -29,7 +29,7 @@
   --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
   --mono: 'DM Mono', ui-monospace, monospace;
 }
-[data-theme="light"] {
+[data-theme="light"], [data-theme="light"] .xr-off {
   --bg: #f3f6f8;
   --bg2: #e9eef2;
   --bg3: #dfe6eb;

@@ -46,6 +46,8 @@ const boot = async () => {
   if (enabled('magnetic') && env.finePointer && !env.reducedMotion) (await import('./effects/magnetic.js')).initMagnetic();
   if (enabled('scramble') && !env.reducedMotion) (await import('./effects/scramble.js')).initHeadingScramble();
 
+  if (enabled('xray')) (await import('./xray/xray.js')).initXray();
+  if (enabled('lens') && env.finePointer) (await import('./xray/lens.js')).initLens();
   if (enabled('detection')) (await import('./detect/detector.js')).initDetector();
   if (enabled('inference')) (await import('./detect/inference.js')).initInference();
 
