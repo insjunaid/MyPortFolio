@@ -10,7 +10,7 @@ import { SIZE } from './argus.js';
 
 const LOG = [
   ['> mounting optical sensor', 'ok'],
-  ['> loading vision weights  argus-v2.6.pt', 'ok'],
+  ['> loading vision weights', 'ok'],
   ['> calibrating attention heads', '12/12'],
   ['> building feature pyramid', 'ok'],
   ['> scanning environment', '…'],
@@ -48,7 +48,9 @@ export async function runIntro(argus, { anchor, onReveal }) {
         line.textContent = text.slice(0, i);
         await sleep(lite ? 9 : 13);
       }
-      const dots = ' ' + '.'.repeat(Math.max(2, 44 - text.length)) + ' ';
+      // Pad to the column width that fits this screen (about 6.6px per mono character at 11px).
+      const cols = innerWidth < 520 ? Math.floor((innerWidth - 32) / 6.6) : 48;
+      const dots = ' ' + '.'.repeat(Math.max(2, cols - text.length - result.length - 2)) + ' ';
       line.append(dots);
       const r = document.createElement('span');
       r.className = cls || 'ok';
@@ -62,7 +64,7 @@ export async function runIntro(argus, { anchor, onReveal }) {
   const unit = SIZE / 200;
   const scale = lite ? 0.55 : 1;
   const cx = innerWidth / 2;
-  const cy = innerHeight * (innerWidth < 760 ? 0.38 : 0.44);
+  const cy = innerHeight * (innerWidth < 760 || innerHeight < 700 ? 0.32 : 0.44);
   const px = scale * unit;
   const pts = sampleArgus(px, lite ? 3.4 : 2.5).map((p) => ({ x: cx - 100 * px + p.x, y: cy - 100 * px + p.y, c: p.c, a: p.a }));
 

@@ -10,7 +10,8 @@ const NAV = 72;
 export function anchorFor(id, index) {
   return () => {
     const vw = innerWidth, vh = innerHeight;
-    if (vw < 760) return { x: vw - 44, y: vh - 66, s: 0.25 };
+    // Phones and short landscape screens: ARGUS docks small in the corner instead of over content.
+    if (vw < 760 || vh < 560) return { x: vw - 44, y: vh - 66, s: 0.25 };
     if (id === 'home') {
       const card = qs('.hero-ide-card');
       const r = card && card.getBoundingClientRect();

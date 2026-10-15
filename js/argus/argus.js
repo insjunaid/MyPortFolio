@@ -2,7 +2,7 @@
 // glitch-teleport between positions. Where it goes is decided by director.js.
 import { addTask } from '../core/loop.js';
 import { emit, on, state } from '../core/bus.js';
-import { pointer } from '../core/input.js';
+import { pointer, scroll } from '../core/input.js';
 import { env } from '../core/env.js';
 import { h, clamp, lerp, rand, pick, cssRgb } from '../core/util.js';
 import { drawArgus, sampleArgus } from './sprite.js';
@@ -62,6 +62,8 @@ export function createArgus() {
 
   addTask((t) => {
     if (!self.visible) return;
+    // On touch screens ARGUS fades back while the visitor scrolls, so it never blocks reading.
+    if (!env.finePointer) wrap.classList.toggle('is-dim', Math.abs(scroll.velocity) > 0.8);
     if (lite && (frameN++ & 1)) return;
 
     // Follow the anchor (unless curious, teleporting or scripted).
