@@ -66,7 +66,7 @@ export function createArgus() {
 
     // Follow the anchor (unless curious, teleporting or scripted).
     const now = performance.now();
-    const still = now - pointer.lastMove > 3200 && pointer.inside && !state.introActive;
+    const still = now - pointer.lastMove > 3200 && pointer.inside && !state.introActive && !state.visionOpen;
     if (self.anchor && !self.busy) {
       const a = self.anchor();
       let tx = a.x, ty = a.y;
@@ -175,7 +175,8 @@ export function createArgus() {
     if (pending) { const p = pending; pending = null; teleport(p); }
   }
 
-  Object.assign(self, { say, appear, teleport, render, place });
+  const blinkNow = () => { blink = 1; };
+  Object.assign(self, { say, appear, teleport, render, place, blinkNow });
   return self;
 }
 

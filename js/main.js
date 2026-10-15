@@ -48,6 +48,7 @@ const boot = async () => {
 
   if (enabled('xray')) (await import('./xray/xray.js')).initXray();
   if (enabled('lens') && env.finePointer) (await import('./xray/lens.js')).initLens();
+  if (enabled('webcam') && env.finePointer && !env.mobile && navigator.mediaDevices) (await import('./webcam/webcam.js')).initWebcam();
   if (enabled('detection')) (await import('./detect/detector.js')).initDetector();
   if (enabled('inference')) (await import('./detect/inference.js')).initInference();
 

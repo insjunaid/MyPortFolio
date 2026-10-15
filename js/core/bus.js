@@ -19,4 +19,5 @@ export const state = {
   xray: false,
   sector: null,
   lenis: null,
+  visionOpen: false,
 };
