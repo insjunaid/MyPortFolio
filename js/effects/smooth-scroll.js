@@ -2,13 +2,14 @@
 // Anchor links (nav, skip link, CTAs) are routed through Lenis so they glide instead of jumping.
 import { addTask } from '../core/loop.js';
 import { state } from '../core/bus.js';
+import { loadScript } from '../core/util.js';
 
-export function initSmoothScroll() {
+export async function initSmoothScroll() {
+  await loadScript('vendor/lenis.min.js').catch(() => {});
   if (!window.Lenis) return null;
   const lenis = new window.Lenis({ lerp: 0.11, smoothWheel: true, wheelMultiplier: 0.95 });
   state.lenis = lenis;
   addTask((t) => lenis.raf(t));
-  if (window.ScrollTrigger) lenis.on('scroll', window.ScrollTrigger.update);
 
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a[href^="#"]');

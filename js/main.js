@@ -5,6 +5,7 @@ import { env, enabled } from './core/env.js';
 import { addTask } from './core/loop.js';
 import { sampleScroll } from './core/input.js';
 import { state } from './core/bus.js';
+import { loadCss } from './core/util.js';
 import { initSections } from './core/sections.js';
 import { initSite } from './site.js';
 import { initDock, addDockButton } from './ui/dock.js';
@@ -33,7 +34,7 @@ const boot = async () => {
 
   if (enabled('smoothScroll') && env.finePointer && !env.reducedMotion) {
     const { initSmoothScroll } = await import('./effects/smooth-scroll.js');
-    initSmoothScroll();
+    await initSmoothScroll();
   }
 
   if (enabled('neuralBg')) {
@@ -46,10 +47,18 @@ const boot = async () => {
   if (enabled('magnetic') && env.finePointer && !env.reducedMotion) (await import('./effects/magnetic.js')).initMagnetic();
   if (enabled('scramble') && !env.reducedMotion) (await import('./effects/scramble.js')).initHeadingScramble();
 
+  // Effect stylesheets load here (not in <head>) so they never block first paint.
+  const css = [];
+  if (enabled('argus') || enabled('easterEgg')) css.push('css/argus.css');
+  if (enabled('detection') || enabled('inference') || enabled('easterEgg')) css.push('css/detect.css');
+  if (enabled('xray') || enabled('lens')) css.push('css/xray.css');
+  await Promise.all(css.map(loadCss));
+
   if (enabled('xray')) (await import('./xray/xray.js')).initXray();
   if (enabled('lens') && env.finePointer) (await import('./xray/lens.js')).initLens();
   if (enabled('webcam') && env.finePointer && !env.mobile && navigator.mediaDevices) (await import('./webcam/webcam.js')).initWebcam();
   if (enabled('detection')) (await import('./detect/detector.js')).initDetector();
+  if (enabled('easterEgg')) (await import('./egg.js')).initEgg();
   if (enabled('inference')) (await import('./detect/inference.js')).initInference();
 
   // Sections last, so every listener above hears the first 'sector' event.
@@ -75,7 +84,7 @@ async function bootArgus(sections, introWanted) {
   const argus = createArgus();
   window.__argusEntity = argus;
   if (introWanted) state.introActive = true; // claim the stage before ScrollTrigger fires
-  initDirector(argus);
+  await initDirector(argus);
 
   // The section under the middle of the viewport right now (scroll may be restored on reload).
   const mid = innerHeight / 2;

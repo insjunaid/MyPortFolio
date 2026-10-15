@@ -5,7 +5,7 @@
 import { addTask } from '../core/loop.js';
 import { emit, state } from '../core/bus.js';
 import { addDockButton } from '../ui/dock.js';
-import { h, qs, qsa } from '../core/util.js';
+import { h, qs, qsa, loadCss } from '../core/util.js';
 import { classify, stabilizer } from './gestures.js';
 
 const MP = 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.21';
@@ -18,15 +18,6 @@ const GESTURE_TEXT = {
   peace: 'peace → x-ray', point: 'pointing', unknown: '',
 };
 
-/** Resolves once the stylesheet has applied, so the panel never renders unstyled. */
-function loadCss(href) {
-  if (qs(`link[href="${href}"]`)) return Promise.resolve();
-  return new Promise((resolve) => {
-    const link = h('link', { rel: 'stylesheet', href });
-    link.onload = link.onerror = () => resolve();
-    document.head.append(link);
-  });
-}
 
 export function initWebcam() {
   let panel, canvas, ctx, statusEl, startBtn, msgEl;
@@ -87,9 +78,11 @@ export function initWebcam() {
     try {
       const mp = await import(/* webpackIgnore: true */ `${MP}/vision_bundle.mjs`);
       vision = vision || await mp.FilesetResolver.forVisionTasks(`${MP}/wasm`);
-      const make = (Task, model, extra) => Task.createFromOptions(vision, {
-        baseOptions: { modelAssetPath: model, delegate: 'GPU' }, runningMode: 'VIDEO', ...extra,
-      });
+      // GPU (WebGL) delegate first; fall back to CPU where WebGL is unavailable.
+      const make = (Task, model, extra) => {
+        const opts = (delegate) => ({ baseOptions: { modelAssetPath: model, delegate }, runningMode: 'VIDEO', ...extra });
+        return Task.createFromOptions(vision, opts('GPU')).catch(() => Task.createFromOptions(vision, opts('CPU')));
+      };
       [face, hand] = await Promise.all([
         make(mp.FaceLandmarker, MODELS.face, { numFaces: 1, outputFaceBlendshapes: true }),
         make(mp.HandLandmarker, MODELS.hand, { numHands: 1 }),

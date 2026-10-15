@@ -35,6 +35,26 @@ export function cssRgb(name, el = document.documentElement) {
 /** Fake but plausible detector confidence, 2 decimals, biased high. */
 export const conf = (min = 0.9, max = 0.995) => (min + Math.random() * (max - min)).toFixed(2);
 
+/** Inject a stylesheet once; resolves when it has applied (or failed), so nothing renders unstyled. */
+export function loadCss(href) {
+  const existing = document.querySelector(`link[href="${href}"]`);
+  if (existing) return existing.__ready || Promise.resolve();
+  const link = h('link', { rel: 'stylesheet', href });
+  link.__ready = new Promise((resolve) => { link.onload = link.onerror = () => resolve(); });
+  document.head.append(link);
+  return link.__ready;
+}
+
+/** Inject a classic script once (vendored UMD libs); resolves when it has run. */
+export function loadScript(src) {
+  const existing = document.querySelector(`script[src="${src}"]`);
+  if (existing) return existing.__ready || Promise.resolve();
+  const s = h('script', { src });
+  s.__ready = new Promise((resolve, reject) => { s.onload = resolve; s.onerror = reject; });
+  document.head.append(s);
+  return s.__ready;
+}
+
 export const isTyping = (e) => {
   const t = e.target;
   return t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName));

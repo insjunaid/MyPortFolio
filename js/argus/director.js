@@ -3,7 +3,7 @@
 // they're re-evaluated every frame and survive resizes; the hero anchor tracks the code window.
 import { on, state } from '../core/bus.js';
 import { env } from '../core/env.js';
-import { qs, clamp } from '../core/util.js';
+import { qs, clamp, loadScript } from '../core/util.js';
 
 const NAV = 72;
 
@@ -29,16 +29,22 @@ export function anchorFor(id, index) {
   };
 }
 
-export function initDirector(argus) {
+export async function initDirector(argus) {
   const sections = [...document.querySelectorAll('main > section[id]')];
   const go = (sec) => {
     if (state.introActive) return;
     argus.teleport(anchorFor(sec.id, sections.indexOf(sec)));
   };
 
+  // GSAP + ScrollTrigger only where ARGUS actually travels (desktop). On phones it stays docked
+  // in the corner, so the libraries (and ScrollTrigger's layout reads) are skipped entirely.
+  if (env.finePointer && innerWidth >= 760) {
+    try { await loadScript('vendor/gsap.min.js'); await loadScript('vendor/ScrollTrigger.min.js'); } catch (e) { /* fall back below */ }
+  }
   const ST = window.ScrollTrigger;
   if (window.gsap && ST) {
     window.gsap.registerPlugin(ST);
+    if (state.lenis) state.lenis.on('scroll', ST.update);
     sections.forEach((sec) => {
       ST.create({
         trigger: sec, start: 'top 55%', end: 'bottom 55%',

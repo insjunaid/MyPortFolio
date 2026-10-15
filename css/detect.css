@@ -43,7 +43,7 @@
   position: absolute; left: -1px; bottom: 100%; margin-bottom: 2px;
   padding: 3px 6px 2px; white-space: nowrap;
   font: 500 10.5px/1.2 var(--mono); letter-spacing: 0.03em;
-  background: var(--accent-warm); color: #1a1000;
+  background: var(--det-amber); color: #1a1000;
   animation: det-label 0.3s 0.1s both steps(6);
 }
 @keyframes det-snap { from { transform: scale(1.12); opacity: 0; } to { transform: none; opacity: 1; } }
@@ -69,7 +69,7 @@
 .focus-label {
   position: absolute; left: -1px; bottom: 100%; margin-bottom: 3px;
   padding: 3px 7px 2px; font: 500 11px/1.2 var(--mono);
-  background: var(--accent-warm); color: #1a1000; white-space: nowrap;
+  background: var(--det-amber); color: #1a1000; white-space: nowrap;
 }
 
 #inference-panel {

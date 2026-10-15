@@ -40,8 +40,12 @@ function initTypewriter() {
   const words = ['AI Engineer', 'Computer Vision', 'Deep Learning', 'Agentic AI', 'Machine Learning', 'Data Science'];
   const el = document.getElementById('typewriter-text');
   if (!el) return;
-  el.setAttribute('aria-live', 'off');
-  el.parentElement.setAttribute('aria-label', 'Focus areas: ' + words.join(', '));
+  // Screen readers get the full list once instead of a constantly retyping word.
+  el.setAttribute('aria-hidden', 'true');
+  const sr = document.createElement('span');
+  sr.className = 'sr-only';
+  sr.textContent = 'Focus areas: ' + words.join(', ');
+  el.parentElement.append(sr);
 
   if (env.reducedMotion) {
     let i = 0;
