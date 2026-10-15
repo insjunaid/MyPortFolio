@@ -1,0 +1,116 @@
+/* ═══ Detection overlay · scan line · project inference ═══ */
+
+#detect-layer { position: fixed; inset: 0; z-index: 85; pointer-events: none; overflow: hidden; }
+
+/* Scan line: a bright edge with a fading "already scanned" wake above it */
+.scan-line {
+  position: absolute; left: 0; right: 0; top: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb), 0.9) 15%, rgba(var(--accent-rgb), 0.9) 85%, transparent);
+  box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.8), 0 0 2px rgba(var(--accent-rgb), 1);
+  opacity: 0; transition: opacity 0.25s; will-change: transform;
+}
+.scan-line::before {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 1px; height: 120px;
+  background: linear-gradient(to top, rgba(var(--accent-rgb), 0.09), transparent);
+}
+.scan-line.is-on { opacity: 1; }
+.scan-label {
+  position: absolute; left: clamp(16px, 4vw, 48px); bottom: 6px;
+  font: 400 10px/1 var(--mono); letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--accent); white-space: nowrap;
+}
+
+/* Detection box: cyan corner brackets, thin hairline, amber class label */
+.det { position: absolute; left: 0; top: 0; will-change: transform; transition: opacity 0.4s; }
+.det.is-out { opacity: 0; }
+.det-in { position: absolute; inset: 0; animation: det-snap 0.3s cubic-bezier(0.2, 0.9, 0.2, 1); }
+.det-in::before {
+  content: ''; position: absolute; inset: 0;
+  border: 1px solid rgba(var(--accent-rgb), 0.28);
+  animation: det-fade 0.35s 0.12s both;
+}
+:where(.det, #focus-box) .c {
+  position: absolute; width: 14px; height: 14px;
+  border: 2px solid var(--accent);
+  filter: drop-shadow(0 0 4px rgba(var(--accent-rgb), 0.7));
+  animation: det-corner 0.28s cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+.c.tl { left: -1px; top: -1px; border-right: 0; border-bottom: 0; transform-origin: 0 0; }
+.c.tr { right: -1px; top: -1px; border-left: 0; border-bottom: 0; transform-origin: 100% 0; }
+.c.bl { left: -1px; bottom: -1px; border-right: 0; border-top: 0; transform-origin: 0 100%; }
+.c.br { right: -1px; bottom: -1px; border-left: 0; border-top: 0; transform-origin: 100% 100%; }
+.det-label {
+  position: absolute; left: -1px; bottom: 100%; margin-bottom: 2px;
+  padding: 3px 6px 2px; white-space: nowrap;
+  font: 500 10.5px/1.2 var(--mono); letter-spacing: 0.03em;
+  background: var(--accent-warm); color: #1a1000;
+  animation: det-label 0.3s 0.1s both steps(6);
+}
+@keyframes det-snap { from { transform: scale(1.12); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes det-corner { from { transform: scale(0); } to { transform: none; } }
+@keyframes det-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes det-label { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+
+/* ─── Project focus + inference panel ─── */
+#focus-box {
+  position: fixed; left: 0; top: 0; z-index: 86; pointer-events: none;
+  opacity: 0; transition: opacity 0.2s; will-change: transform;
+}
+#focus-box.is-on { opacity: 1; }
+/* The focus box replaces the reticle lock while a project is being inspected */
+.is-inferring #reticle .rt-c, .is-inferring #reticle .rt-label { opacity: 0; }
+#focus-box .c { width: 20px; height: 20px; }
+#focus-box:not(.is-on) .c { animation: none; }
+#focus-box .tick { position: absolute; background: var(--accent); opacity: 0.8; }
+#focus-box .tick.t, #focus-box .tick.b { left: 50%; width: 1px; height: 10px; }
+#focus-box .tick.t { top: -5px; } #focus-box .tick.b { bottom: -5px; }
+#focus-box .tick.l, #focus-box .tick.r { top: 50%; height: 1px; width: 10px; }
+#focus-box .tick.l { left: -5px; } #focus-box .tick.r { right: -5px; }
+.focus-label {
+  position: absolute; left: -1px; bottom: 100%; margin-bottom: 3px;
+  padding: 3px 7px 2px; font: 500 11px/1.2 var(--mono);
+  background: var(--accent-warm); color: #1a1000; white-space: nowrap;
+}
+
+#inference-panel {
+  position: fixed; left: 0; top: 0; z-index: 87; width: 268px; pointer-events: none;
+  padding: 12px 14px 14px;
+  font: 400 11px/1.5 var(--mono); color: var(--text2);
+  background: rgba(4, 8, 12, 0.92);
+  border: 1px solid rgba(var(--accent-rgb), 0.3); border-radius: 10px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), 0 0 30px rgba(var(--accent-rgb), 0.08);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  opacity: 0; transition: opacity 0.2s; will-change: transform;
+}
+#inference-panel.is-on { opacity: 1; }
+[data-theme="light"] #inference-panel { background: rgba(6, 12, 18, 0.94); color: #a9b7c2; }
+.inf-head {
+  display: flex; justify-content: space-between; margin-bottom: 8px; padding-bottom: 8px;
+  border-bottom: 1px solid rgba(var(--accent-rgb), 0.15);
+  letter-spacing: 0.12em; color: #5ce1ff;
+}
+.inf-model { color: #7f8d98; letter-spacing: 0.04em; }
+.inf-row { display: flex; justify-content: space-between; gap: 12px; }
+.inf-k { color: #7f8d98; }
+.inf-v { color: #e9f1f5; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.inf-heat-wrap { position: relative; margin: 10px 0 8px; border-radius: 6px; overflow: hidden; border: 1px solid rgba(var(--accent-rgb), 0.15); }
+.inf-heat { display: block; width: 100%; height: auto; aspect-ratio: 336 / 200; }
+.inf-heat-label { position: absolute; right: 6px; bottom: 4px; font-size: 9px; color: rgba(233, 241, 245, 0.7); letter-spacing: 0.08em; }
+.inf-bar { display: grid; grid-template-columns: 96px 1fr 30px; align-items: center; gap: 8px; font-size: 10px; }
+.inf-bar-k { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #a9b7c2; }
+.inf-bar-track { height: 3px; background: rgba(var(--accent-rgb), 0.12); border-radius: 2px; overflow: hidden; }
+.inf-bar-fill { display: block; height: 100%; background: #5ce1ff; }
+.inf-bar-v { text-align: right; color: #e9f1f5; }
+
+/* Faint attention glow on the card itself, centred where the model is "looking" */
+.attn-overlay {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0;
+  background: radial-gradient(circle at var(--hx, 50%) var(--hy, 40%), rgba(255, 140, 60, 0.16), rgba(255, 190, 60, 0.06) 22%, transparent 45%);
+  transition: opacity 0.3s;
+}
+.project-card.is-inferring .attn-overlay { opacity: 1; }
+.project-card .pc-bottom { position: relative; z-index: 2; }
+
+@media (max-width: 759px) {
+  #inference-panel { width: min(268px, calc(100vw - 24px)); }
+}

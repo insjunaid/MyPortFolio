@@ -46,6 +46,9 @@ const boot = async () => {
   if (enabled('magnetic') && env.finePointer && !env.reducedMotion) (await import('./effects/magnetic.js')).initMagnetic();
   if (enabled('scramble') && !env.reducedMotion) (await import('./effects/scramble.js')).initHeadingScramble();
 
+  if (enabled('detection')) (await import('./detect/detector.js')).initDetector();
+  if (enabled('inference')) (await import('./detect/inference.js')).initInference();
+
   // Sections last, so every listener above hears the first 'sector' event.
   const sections = initSections();
 
