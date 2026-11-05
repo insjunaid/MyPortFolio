@@ -1,0 +1,52 @@
+/* ═══ ARGUS entity, speech bubble, particle layer, intro ═══ */
+
+#argus {
+  position: fixed; left: 0; top: 0; /* size set from SIZE in argus.js */
+  z-index: 9990; pointer-events: none; transform-origin: 50% 50%;
+  opacity: 0; transition: opacity 0.25s ease; will-change: transform;
+}
+#argus.is-visible { opacity: 1; }
+#argus.is-visible.is-dim { opacity: 0.35; }
+.argus-canvas { display: block; }
+.argus-hit {
+  position: absolute; left: 22%; top: 20%; width: 56%; height: 52%;
+  border: 0; border-radius: 46%; background: transparent; pointer-events: auto;
+}
+#argus:not(.is-visible) .argus-hit { visibility: hidden; }
+.argus-hit:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
+
+#argus.is-glitching .argus-canvas { animation: argus-glitch 0.2s steps(3) 1; }
+#argus.is-materializing .argus-canvas { animation: argus-in 0.42s ease-out; }
+@keyframes argus-glitch {
+  0%   { transform: translate(3px, -1px); clip-path: inset(12% 0 52% 0); filter: drop-shadow(-4px 0 rgba(var(--amber-rgb), 0.9)) drop-shadow(4px 0 rgba(var(--accent-rgb), 0.9)); }
+  33%  { transform: translate(-4px, 2px); clip-path: inset(48% 0 14% 0); filter: drop-shadow(5px 0 rgba(var(--amber-rgb), 0.9)) drop-shadow(-5px 0 rgba(var(--accent-rgb), 0.9)); }
+  66%  { transform: translate(2px, 1px);  clip-path: inset(28% 0 30% 0); }
+  100% { transform: none; clip-path: inset(0); filter: none; }
+}
+@keyframes argus-in {
+  from { opacity: 0; transform: scale(0.9); filter: brightness(2.4) blur(1px); }
+  to   { opacity: 1; transform: none; filter: none; }
+}
+
+#argus-bubble {
+  position: fixed; z-index: 9991;
+  max-width: min(300px, calc(100vw - 32px));
+  padding: 10px 13px 11px;
+  font: 400 12px/1.55 var(--mono); color: #e9f1f5;
+  background: rgba(4, 8, 12, 0.94);
+  border: 1px solid rgba(var(--accent-rgb), 0.4);
+  border-radius: 3px 12px 12px 12px;
+  box-shadow: 0 0 28px rgba(var(--accent-rgb), 0.14);
+  opacity: 0; transform: translateY(6px);
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+}
+#argus-bubble[data-side="left"] { border-radius: 12px 3px 12px 12px; }
+#argus-bubble::before {
+  content: 'ARGUS ›'; display: block; margin-bottom: 4px;
+  font-size: 10px; letter-spacing: 0.14em; color: var(--accent);
+}
+#argus-bubble.is-on { opacity: 1; transform: none; }
+#argus-bubble:empty::after { content: '▍'; color: var(--accent); }
+
+#fx-layer { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 9985; pointer-events: none; }

@@ -1,3 +1,10 @@
+/* ─── Fonts (self-hosted, OFL): no third-party request blocks first paint ─── */
+@font-face { font-family: 'Syne'; font-style: normal; font-weight: 400 800; font-display: swap; src: url('../fonts/syne.woff2') format('woff2'); }
+@font-face { font-family: 'DM Sans'; font-style: normal; font-weight: 300 500; font-display: swap; src: url('../fonts/dm-sans.woff2') format('woff2'); }
+@font-face { font-family: 'DM Sans'; font-style: italic; font-weight: 300; font-display: swap; src: url('../fonts/dm-sans-italic.woff2') format('woff2'); }
+@font-face { font-family: 'DM Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('../fonts/dm-mono-400.woff2') format('woff2'); }
+@font-face { font-family: 'DM Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url('../fonts/dm-mono-500.woff2') format('woff2'); }
+
 /* ─── CSS Variables ─── */
 :root, .xr-off { /* .xr-off re-declares the normal tokens inside the X-ray lens */
   /* Base: near-black with a cold blue cast (defense / aerospace HUD) */

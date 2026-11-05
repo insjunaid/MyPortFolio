@@ -11,11 +11,11 @@
 <meta name="theme-color" content="#05070a">
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/syne.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/dm-sans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/hud.css">
+<link rel="stylesheet" href="css/flight.css">
 <script>
 /* Boot flags, set before first paint: .js gates scroll-reveal styles; .intro-pending shows the
    ARGUS materialization once per session (never with reduced motion or calm mode). A watchdog
@@ -40,7 +40,7 @@
 
 <!-- ARGUS materialization intro (driven by js/argus/intro.js) -->
 <div id="intro" aria-hidden="true">
-  <div class="boot-log"><div class="boot-head">ARGUS v2.6 :: vision core <span class="boot-blink">initializing</span></div></div>
+  <div class="boot-log"><div class="boot-head">PRE-FLIGHT :: ARGUS v2.6 <span class="boot-blink">systems check</span></div></div>
   <div class="intro-target"><span class="intro-target-label"></span></div>
 </div>
 <button id="intro-skip" class="intro-skip" type="button">Skip intro <kbd>Esc</kbd></button>
@@ -128,6 +128,8 @@
   </div>
 </section>
 
+<div class="sky-gap" aria-hidden="true"><span class="gap-tag">CLIMB</span></div>
+
 <!-- ─── ABOUT ─── -->
 <section id="about">
   <div class="about-grid" style="max-width:1160px;margin:0 auto;">
@@ -155,12 +157,17 @@
   </div>
 </section>
 
+<div class="sky-gap" aria-hidden="true"><span class="gap-tag">COCKPIT</span></div>
+
 <!-- ─── SKILLS ─── -->
 <section id="skills">
   <div style="max-width:1160px;margin:0 auto;">
-    <div class="section-label fade-up">Technical skills</div>
-    <h2 class="section-title fade-up">My toolkit</h2>
+    <div class="sec-head">
+      <div class="section-label fade-up">Technical skills</div>
+      <h2 class="section-title fade-up">My toolkit</h2>
+    </div>
     <div class="skills-grid">
+      <div class="radar" aria-hidden="true"><canvas></canvas></div>
       <div class="skill-cat fade-up">
         <span class="skill-cat-icon">🐍</span>
         <div class="skill-cat-name">Programming Languages</div>
@@ -228,8 +235,12 @@
   </div>
 </section>
 
+<div class="sky-gap" aria-hidden="true"><span class="gap-tag">MISSIONS</span></div>
+
 <!-- ─── PROJECTS ─── -->
 <section id="projects">
+ <div class="missions-pin">
+ <div class="mission-track">
   <div class="projects-header">
     <div class="section-label fade-up">Featured work</div>
     <h2 class="section-title fade-up">Projects that matter</h2>
@@ -238,6 +249,7 @@
   <div class="projects-grid">
     <!-- 1. Lung Cancer -->
     <div class="project-card fade-up">
+      <div class="pc-stamp" aria-hidden="true">MISSION 01</div>
       <div class="pc-top">
         <div class="pc-domain">Medical AI · Computer Vision</div>
       </div>
@@ -258,6 +270,7 @@
     </div>
     <!-- 2. Colorectal Tissue -->
     <div class="project-card fade-up">
+      <div class="pc-stamp" aria-hidden="true">MISSION 02</div>
       <div class="pc-top">
         <div class="pc-domain">Medical AI · Deep Learning</div>
       </div>
@@ -278,6 +291,7 @@
     </div>
     <!-- 3. Email Agent -->
     <div class="project-card fade-up">
+      <div class="pc-stamp" aria-hidden="true">MISSION 03</div>
       <div class="pc-top">
         <div class="pc-domain">Agentic AI · Automation</div>
       </div>
@@ -297,6 +311,7 @@
     </div>
     <!-- 4. MindfulAI -->
     <div class="project-card fade-up">
+      <div class="pc-stamp" aria-hidden="true">MISSION 04</div>
       <div class="pc-top">
         <div></div>
         <div class="pc-domain">NLP · Mental Health</div>
@@ -317,6 +332,7 @@
     </div>
     <!-- 5. PowerBI -->
     <div class="project-card fade-up">
+      <div class="pc-stamp" aria-hidden="true">MISSION 05</div>
       <div class="pc-top">
         <div></div>
         <div class="pc-domain">Business Intelligence · Analytics</div>
@@ -336,6 +352,7 @@
     </div>
     <!-- 6. SQL -->
     <div class="project-card fade-up">
+      <div class="pc-stamp" aria-hidden="true">MISSION 06</div>
       <div class="pc-top">
         <div></div>
         <div class="pc-domain">Data Analysis · SQL</div>
@@ -354,15 +371,23 @@
       </div>
     </div>
   </div>
+ </div>
+ </div>
 </section>
+
+<div class="sky-gap" aria-hidden="true"><span class="gap-tag">FLIGHT PATH</span></div>
 
 <!-- ─── EXPERIENCE ─── -->
 <section id="experience">
   <div style="max-width:1160px;margin:0 auto;">
-    <div class="section-label fade-up">Work experience</div>
-    <h2 class="section-title fade-up">Where I've worked</h2>
+    <div class="sec-head">
+      <div class="section-label fade-up">Work experience</div>
+      <h2 class="section-title fade-up">Where I've worked</h2>
+    </div>
     <div class="exp-timeline">
+      <svg class="route-map" aria-hidden="true" preserveAspectRatio="none"><path class="route-base"/><path class="route-line"/><g class="route-jet"><path d="M0-15 3-5 15 4 15 8 3 4 2 11 6 14 6 16 0 14-6 16-6 14-2 11-3 4-15 8-15 4-3-5Z"/></g></svg>
       <div class="exp-item fade-up">
+        <span class="exp-pin" aria-hidden="true"><i>WPT 01</i></span>
         <div class="exp-card">
           <div class="exp-header">
             <div class="exp-title">AI Engineer</div>
@@ -377,6 +402,7 @@
         </div>
       </div>
       <div class="exp-item fade-up">
+        <span class="exp-pin" aria-hidden="true"><i>WPT 02</i></span>
         <div class="exp-card">
           <div class="exp-header">
             <div class="exp-title">AI / ML Intern</div>
@@ -401,6 +427,7 @@
         </div>
       </div>
       <div class="exp-item fade-up">
+        <span class="exp-pin" aria-hidden="true"><i>WPT 03</i></span>
         <div class="exp-card">
           <div class="exp-header">
             <div class="exp-title">Data Science Intern</div>
@@ -431,11 +458,15 @@
   </div>
 </section>
 
+<div class="sky-gap" aria-hidden="true"><span class="gap-tag">WINGS</span></div>
+
 <!-- ─── CERTIFICATIONS ─── -->
 <section id="certifications">
+  <div class="sec-head">
   <div class="section-label fade-up">Credentials</div>
   <h2 class="section-title fade-up">Professional certifications</h2>
   <p class="fade-up" style="color:var(--text2);font-size:0.92rem;margin-bottom:0;max-width:480px;">All certifications are verified and accessible. Industry-recognized credentials from top institutions.</p>
+  </div>
   <div class="cert-grid">
     <div class="cert-card fade-up">
       <div class="cert-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="var(--accent)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>
@@ -484,9 +515,11 @@
   </div>
 </section>
 
+<div class="sky-gap" aria-hidden="true"><span class="gap-tag">MEDALS</span></div>
+
 <!-- ─── ACHIEVEMENTS ─── -->
 <section id="achievements">
-  <div style="max-width:1160px;margin:0 auto;">
+  <div class="sec-head" style="max-width:1160px;margin:0 auto;">
     <div class="section-label fade-up">Beyond Algorithms</div>
     <h2 class="section-title fade-up">Achievements</h2>
     <p class="fade-up" style="color:var(--text2);max-width:480px;font-size:0.92rem;margin-bottom:0;">Competitions, leadership, and community contributions that define who I am outside the terminal.</p>
@@ -515,9 +548,12 @@
   </div>
 </section>
 
+<div class="sky-gap" aria-hidden="true"><span class="gap-tag">LANDING / ATC</span></div>
+
 <!-- ─── CONTACT ─── -->
 <section id="contact">
   <div class="contact-inner">
+    <div class="bp-strip" aria-hidden="true"><span>BOARDING PASS</span><span>ATC · CLEARED TO CONNECT</span></div>
     <div class="contact-left fade-up">
       <div class="section-label">Connect</div>
       <div class="big-text">Let's build<br>something <em>together</em></div>
@@ -540,6 +576,7 @@
           <span class="connect-platform">Email <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></span>
         </a>
       </div>
+      <div class="bp-code" aria-hidden="true"></div>
     </div>
   </div>
 </section>

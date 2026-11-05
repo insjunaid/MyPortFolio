@@ -4,7 +4,7 @@
 import { env, enabled } from './core/env.js';
 import { addTask } from './core/loop.js';
 import { sampleScroll } from './core/input.js';
-import { state } from './core/bus.js';
+import { emit, state } from './core/bus.js';
 import { loadCss } from './core/util.js';
 import { initSections } from './core/sections.js';
 import { initSite } from './site.js';
@@ -32,34 +32,68 @@ const boot = async () => {
     },
   });
 
-  if (enabled('smoothScroll') && env.finePointer && !env.reducedMotion) {
-    const { initSmoothScroll } = await import('./effects/smooth-scroll.js');
-    await initSmoothScroll();
-  }
-
-  if (enabled('neuralBg')) {
-    const { initNeuralBg } = await import('./effects/neural-bg.js');
-    initNeuralBg({ still: env.reducedMotion });
-  }
-
-  if (enabled('hud') && env.finePointer) (await import('./effects/hud.js')).initHud();
-  if (enabled('reticle') && env.finePointer) (await import('./effects/cursor.js')).initReticle();
-  if (enabled('magnetic') && env.finePointer && !env.reducedMotion) (await import('./effects/magnetic.js')).initMagnetic();
-  if (enabled('scramble') && !env.reducedMotion) (await import('./effects/scramble.js')).initHeadingScramble();
+  // Every module starts downloading now, in parallel; each is only awaited where it's used.
+  // (A chain of sequential imports would cost one network round trip each.)
+  const fine = env.finePointer, moving = !env.reducedMotion;
+  const want = (flag, load, extra = true) => (enabled(flag) && extra ? load() : null);
+  const mod = {
+    scroll: want('smoothScroll', () => import('./effects/smooth-scroll.js'), fine && moving),
+    model: env.calm ? null : import('./flight/progress.js'),
+    sky: want('sky', () => import('./flight/sky.js')),
+    plane: want('plane', () => import('./flight/plane.js')),
+    altimeter: want('altimeter', () => import('./flight/altimeter.js')),
+    flap: want('splitflap', () => import('./flight/splitflap.js')),
+    instruments: want('instruments', () => import('./flight/instruments.js')),
+    layout: env.calm ? null : import('./flight/layout.js'),
+    neural: want('neuralBg', () => import('./effects/neural-bg.js')),
+    hud: want('hud', () => import('./effects/hud.js'), fine),
+    reticle: want('reticle', () => import('./effects/cursor.js'), fine),
+    magnetic: want('magnetic', () => import('./effects/magnetic.js'), fine && moving),
+    xray: want('xray', () => import('./xray/xray.js')),
+    lens: want('lens', () => import('./xray/lens.js'), fine),
+    webcam: want('webcam', () => import('./webcam/webcam.js'), fine && !env.mobile && !!navigator.mediaDevices),
+    detector: want('detection', () => import('./detect/detector.js')),
+    egg: want('easterEgg', () => import('./egg.js')),
+    inference: want('inference', () => import('./detect/inference.js')),
+  };
 
   // Effect stylesheets load here (not in <head>) so they never block first paint.
   const css = [];
   if (enabled('argus') || enabled('easterEgg')) css.push('css/argus.css');
   if (enabled('detection') || enabled('inference') || enabled('easterEgg')) css.push('css/detect.css');
   if (enabled('xray') || enabled('lens')) css.push('css/xray.css');
-  await Promise.all(css.map(loadCss));
+  const cssReady = Promise.all(css.map(loadCss));
 
-  if (enabled('xray')) (await import('./xray/xray.js')).initXray();
-  if (enabled('lens') && env.finePointer) (await import('./xray/lens.js')).initLens();
-  if (enabled('webcam') && env.finePointer && !env.mobile && navigator.mediaDevices) (await import('./webcam/webcam.js')).initWebcam();
-  if (enabled('detection')) (await import('./detect/detector.js')).initDetector();
-  if (enabled('easterEgg')) (await import('./egg.js')).initEgg();
-  if (enabled('inference')) (await import('./detect/inference.js')).initInference();
+  if (mod.scroll) await (await mod.scroll).initSmoothScroll();
+
+  // The flight: altitude model first, then everything that reads it.
+  if (mod.model) (await mod.model).initFlightModel();
+  const sky = mod.sky ? (await mod.sky).initSky() : null;
+  if (mod.plane) (await mod.plane).initPlane({ sky, hud: fine });
+  if (mod.altimeter) (await mod.altimeter).initAltimeter();
+  if (mod.flap) (await mod.flap).initSplitFlap();
+  if (mod.instruments) {
+    const { initGauges, initRadar, initWings } = await mod.instruments;
+    initGauges(); initRadar(); initWings();
+  }
+  if (mod.layout) {
+    const layout = await mod.layout;
+    if (enabled('missions')) layout.initMissions();
+    if (enabled('tilt') && fine && moving) layout.initTilt();
+    if (enabled('route')) layout.initRoute();
+  }
+  if (mod.neural) (await mod.neural).initNeuralBg({ still: env.reducedMotion });
+  if (mod.hud) (await mod.hud).initHud();
+  if (mod.reticle) (await mod.reticle).initReticle();
+  if (mod.magnetic) (await mod.magnetic).initMagnetic();
+
+  await cssReady;
+  if (mod.xray) (await mod.xray).initXray();
+  if (mod.lens) (await mod.lens).initLens();
+  if (mod.webcam) (await mod.webcam).initWebcam();
+  if (mod.detector) (await mod.detector).initDetector();
+  if (mod.egg) (await mod.egg).initEgg();
+  if (mod.inference) (await mod.inference).initInference();
 
   // Sections last, so every listener above hears the first 'sector' event.
   const sections = initSections();
@@ -75,9 +109,11 @@ const boot = async () => {
     state.introActive = false;
     if (state.lenis) state.lenis.start();
   }
+  setTimeout(() => emit('takeoff'), 900);
 };
 
 async function bootArgus(sections, introWanted) {
+  const intro = introWanted ? import('./argus/intro.js') : null;
   const [{ createArgus }, { initDirector, anchorFor }] = await Promise.all([
     import('./argus/argus.js'), import('./argus/director.js'),
   ]);
@@ -100,7 +136,7 @@ async function bootArgus(sections, introWanted) {
   };
 
   if (introWanted) {
-    const { runIntro } = await import('./argus/intro.js');
+    const { runIntro } = await intro;
     await runIntro(argus, { anchor, onReveal: decodeHero });
   } else {
     const a = anchor();

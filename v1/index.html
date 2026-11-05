@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Junaid Shariff — AI Engineer · Computer Vision & Applied AI</title>
+<meta name="description" content="Junaid Shariff is an AI Engineer in the aerospace industry, building computer vision, deep learning and agentic AI systems that turn complex, real-time problems into clear, reliable solutions.">
+<meta property="og:title" content="Junaid Shariff — AI Engineer">
+<meta property="og:description" content="AI Engineer in the aerospace industry. Computer vision, deep learning and agentic AI that make complex problems simple.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#05070a">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/hud.css">
+<script>
+/* Boot flags, set before first paint: .js gates scroll-reveal styles; .intro-pending shows the
+   ARGUS materialization once per session (never with reduced motion or calm mode). A watchdog
+   removes it if the modules never boot, so the page can't get stuck behind the intro. */
+(function (h) {
+  h.classList.add('js');
+  try {
+    var calm = /[?&]fx=off/.test(location.search) || localStorage.getItem('argus:calm') === '1';
+    var rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (calm) h.classList.add('calm');
+    if (!calm && !rm && !sessionStorage.getItem('argus:intro')) {
+      h.classList.add('intro-pending');
+      setTimeout(function () { if (!window.__argus) h.classList.remove('intro-pending'); }, 5000);
+    }
+  } catch (e) {}
+})(document.documentElement);
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ARGUS materialization intro (driven by js/argus/intro.js) -->
+<div id="intro" aria-hidden="true">
+  <div class="boot-log"><div class="boot-head">ARGUS v2.6 :: vision core <span class="boot-blink">initializing</span></div></div>
+  <div class="intro-target"><span class="intro-target-label"></span></div>
+</div>
+<button id="intro-skip" class="intro-skip" type="button">Skip intro <kbd>Esc</kbd></button>
+
+<!-- Nav -->
+<nav aria-label="Primary">
+  <a href="#home" class="nav-logo">
+    <picture><source srcset="img/logo-56.webp" type="image/webp"><img src="img/logo-56.png" alt="Junaid Shariff — home" class="nav-logo-img" width="28" height="28"></picture>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#achievements">Achievements</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="status-pill">
+      <span class="status-dot"></span>
+      open for collaborations
+    </div>
+    <button id="theme-toggle" aria-label="Toggle theme">☀</button>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- ─── HERO ─── -->
+<section id="home">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-label">// AI Engineer · aerospace industry · open for collaborations</div>
+      <h1 class="hero-name">
+        Junaid<br><span class="accent-char">Shariff</span>
+      </h1>
+      <div class="hero-typewriter-wrapper">
+        <span id="typewriter-text"></span>
+      </div>
+      <div class="hero-tagline">AI Engineer in the aerospace industry — I build computer vision, deep learning and agentic AI systems that turn complex, real-time problems into clear, reliable solutions.</div>
+      <div class="hero-actions">
+        <a href="#projects" class="btn-primary">↓ View Projects</a>
+        <a href="#contact" class="btn-outline">Get in touch →</a>
+      </div>
+      <div class="scroll-hint">
+        <div class="scroll-line"></div>
+        <span>scroll to explore</span>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-ide-card">
+        <div class="ide-header">
+          <div class="ide-dots">
+            <span class="ide-dot"></span>
+            <span class="ide-dot"></span>
+            <span class="ide-dot"></span>
+          </div>
+          <div class="ide-tabs">
+            <span class="ide-tab active">junaid.py</span>
+            <span class="ide-tab">config.yml</span>
+          </div>
+          <span style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--text3);">UTF-8</span>
+        </div>
+        <div class="ide-body">
+          <div class="ide-line"><span class="ide-ln">1</span><span class="ide-code"><span class="ide-cm"># Building the future, one model at a time</span></span></div>
+          <div class="ide-line"><span class="ide-ln">2</span><span class="ide-code"></span></div>
+          <div class="ide-line"><span class="ide-ln">3</span><span class="ide-code"><span class="ide-kw">class</span> <span class="ide-fn">Junaid</span><span class="ide-op">(</span><span class="ide-pr">Engineer</span><span class="ide-op">):</span></span></div>
+          <div class="ide-line"><span class="ide-ln">4</span><span class="ide-code">&nbsp;&nbsp;<span class="ide-kw">def</span> <span class="ide-fn">__init__</span><span class="ide-op">(</span><span class="ide-var">self</span><span class="ide-op">):</span></span></div>
+          <div class="ide-line"><span class="ide-ln">5</span><span class="ide-code">&nbsp;&nbsp;&nbsp;&nbsp;self.<span class="ide-var">role</span> <span class="ide-op">=</span> <span class="ide-str">"AI Engineer"</span></span></div>
+          <div class="ide-line"><span class="ide-ln">6</span><span class="ide-code">&nbsp;&nbsp;&nbsp;&nbsp;self.<span class="ide-var">passion</span> <span class="ide-op">=</span> <span class="ide-str">"Turning data into intelligence"</span></span></div>
+          <div class="ide-line"><span class="ide-ln">7</span><span class="ide-code">&nbsp;&nbsp;&nbsp;&nbsp;self.<span class="ide-var">projects</span> <span class="ide-op">=</span> <span class="ide-str">"10+"</span></span></div>
+          <div class="ide-line"><span class="ide-ln">8</span><span class="ide-code">&nbsp;&nbsp;&nbsp;&nbsp;self.<span class="ide-var">accuracy</span> <span class="ide-op">=</span> <span class="ide-str">"95%+"</span></span></div>
+          <div class="ide-line"><span class="ide-ln">9</span><span class="ide-code"></span></div>
+          <div class="ide-line"><span class="ide-ln">10</span><span class="ide-code">&nbsp;&nbsp;<span class="ide-kw">def</span> <span class="ide-fn">build</span><span class="ide-op">(</span><span class="ide-var">self</span><span class="ide-op">):</span><span class="ide-cursor-line"></span></span></div>
+        </div>
+        <div class="ide-footer">
+          <span><span class="ide-status-dot"></span>Python 3.11</span>
+          <span>Ln 10, Col 24</span>
+          <span style="color:var(--accent);">⬡ AI Ready</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ─── -->
+<section id="about">
+  <div class="about-grid" style="max-width:1160px;margin:0 auto;">
+    <div class="about-text fade-up">
+      <div class="section-label">About me</div>
+      <h2 class="section-title">Passion for<br><span style="color:var(--accent)">intelligent</span> systems</h2>
+      <p class="about-intro-text">I build AI solutions that <em>actually work</em> in the real world.</p>
+      <p>I'm an AI Engineer working in the aerospace industry, with a deep interest in Computer Vision, Medical Imaging, and Data Science. I build end-to-end AI systems — from raw data pipelines to deployed, user-facing applications.</p>
+      <p>Day to day, I solve real-time problems: turning complex tasks into simple, dependable AI-driven workflows and giving the business clarity to make better decisions.</p>
+      <p>My work spans medical image classification, agentic AI workflows, and business intelligence. I believe in building things that are not only technically sound but also practically impactful — and I keep learning, experimenting, and building along the way.</p>
+    </div>
+    <div class="fade-up">
+      <div class="edu-card">
+        <h3>B.E. in Computer Science &amp; Engineering — Artificial Intelligence</h3>
+        <div class="meta">Maharaja Institute of Technology, Mysore · 2022 – 2026</div>
+        <span class="cgpa">🎓 Graduated · 9.0 / 10 CGPA</span>
+      </div>
+      <div class="about-stats">
+        <div class="astat"><span class="num">10+</span><span class="desc">ML/AI Projects Built</span></div>
+        <div class="astat"><span class="num">6+</span><span class="desc">Certifications</span></div>
+        <div class="astat"><span class="num">9.0</span><span class="desc">CGPA out of 10</span></div>
+        <div class="astat"><span class="num">20+</span><span class="desc">AI/Tech Tools Mastered</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SKILLS ─── -->
+<section id="skills">
+  <div style="max-width:1160px;margin:0 auto;">
+    <div class="section-label fade-up">Technical skills</div>
+    <h2 class="section-title fade-up">My toolkit</h2>
+    <div class="skills-grid">
+      <div class="skill-cat fade-up">
+        <span class="skill-cat-icon">🐍</span>
+        <div class="skill-cat-name">Programming Languages</div>
+        <div class="skill-tags">
+          <span class="stag">Python</span>
+          <span class="stag">Java</span>
+          <span class="stag">SQL</span>
+        </div>
+      </div>
+      <div class="skill-cat fade-up">
+        <span class="skill-cat-icon">🧠</span>
+        <div class="skill-cat-name">ML / Deep Learning</div>
+        <div class="skill-tags">
+          <span class="stag">Supervised Learning</span>
+          <span class="stag">Unsupervised Learning</span>
+          <span class="stag">CNNs</span>
+          <span class="stag">Transfer Learning</span>
+          <span class="stag">Transformers</span>
+        </div>
+      </div>
+      <div class="skill-cat fade-up">
+        <span class="skill-cat-icon">⚙️</span>
+        <div class="skill-cat-name">Frameworks & Libraries</div>
+        <div class="skill-tags">
+          <span class="stag">Scikit-learn</span>
+          <span class="stag">TensorFlow</span>
+          <span class="stag">PyTorch</span>
+          <span class="stag">Pandas</span>
+          <span class="stag">NumPy</span>
+        </div>
+      </div>
+      <div class="skill-cat fade-up">
+        <span class="skill-cat-icon">📊</span>
+        <div class="skill-cat-name">Data & Analytics</div>
+        <div class="skill-tags">
+          <span class="stag">Data Cleaning</span>
+          <span class="stag">Feature Engineering</span>
+          <span class="stag">EDA</span>
+          <span class="stag">Power BI</span>
+          <span class="stag">Tableau</span>
+        </div>
+      </div>
+      <div class="skill-cat fade-up">
+        <span class="skill-cat-icon">🚀</span>
+        <div class="skill-cat-name">Backend & Deployment</div>
+        <div class="skill-tags">
+          <span class="stag">Flask</span>
+          <span class="stag">REST APIs</span>
+          <span class="stag">LLM API Integration</span>
+          <span class="stag">Gemini API</span>
+        </div>
+      </div>
+      <div class="skill-cat fade-up">
+        <span class="skill-cat-icon">🛠️</span>
+        <div class="skill-cat-name">Tools & Databases</div>
+        <div class="skill-tags">
+          <span class="stag">Git</span>
+          <span class="stag">Docker</span>
+          <span class="stag">n8n</span>
+          <span class="stag">MySQL</span>
+          <span class="stag">MongoDB</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PROJECTS ─── -->
+<section id="projects">
+  <div class="projects-header">
+    <div class="section-label fade-up">Featured work</div>
+    <h2 class="section-title fade-up">Projects that matter</h2>
+    <p class="fade-up" style="color:var(--text2);max-width:520px;font-size:0.92rem;line-height:1.7;">End-to-end systems across medical AI, automation, and business intelligence. Built to solve real problems.</p>
+  </div>
+  <div class="projects-grid">
+    <!-- 1. Lung Cancer -->
+    <div class="project-card fade-up">
+      <div class="pc-top">
+        <div class="pc-domain">Medical AI · Computer Vision</div>
+      </div>
+      <div class="pc-title">Multimodal Deep Learning for Lung Cancer Detection</div>
+      <div class="pc-desc">Ensemble of X-ray, CT scan, and patient metadata with explainable AI (Grad-CAM, LIME). Flask interface + Gemini API chatbot. Achieves 89%+ accuracy.</div>
+      <div class="pc-tags">
+        <span class="pc-tag">PyTorch</span>
+        <span class="pc-tag">Ensemble</span>
+        <span class="pc-tag">Grad-CAM</span>
+        <span class="pc-tag">LIME</span>
+        <span class="pc-tag">Flask</span>
+        <span class="pc-tag">Gemini API</span>
+      </div>
+      <div class="pc-bottom">
+        <span class="featured-badge">★ Featured</span>
+        <a href="https://github.com/insjunaid/Multimodal-deep-learning-and-ensembling-for-Lung-Cancer-detection" target="_blank" class="pc-source-link"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg> Source</a>
+      </div>
+    </div>
+    <!-- 2. Colorectal Tissue -->
+    <div class="project-card fade-up">
+      <div class="pc-top">
+        <div class="pc-domain">Medical AI · Deep Learning</div>
+      </div>
+      <div class="pc-title">AI Powered Colorectal Tissue Classification</div>
+      <div class="pc-desc">Deep learning solution for classifying colorectal tissue into 8 categories, achieving 95%+ accuracy with ensemble learning, XAI, and an integrated chatbot.</div>
+      <div class="pc-tags">
+        <span class="pc-tag">PyTorch</span>
+        <span class="pc-tag">Ensemble</span>
+        <span class="pc-tag">XAI</span>
+        <span class="pc-tag">Computer Vision</span>
+        <span class="pc-tag">Flask</span>
+        <span class="pc-tag">Chatbot</span>
+      </div>
+      <div class="pc-bottom">
+        <span class="featured-badge">★ Featured</span>
+        <a href="https://github.com/insjunaid/Colorectal-Tissue-Classification-with-XAI" target="_blank" class="pc-source-link"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg> Source</a>
+      </div>
+    </div>
+    <!-- 3. Email Agent -->
+    <div class="project-card fade-up">
+      <div class="pc-top">
+        <div class="pc-domain">Agentic AI · Automation</div>
+      </div>
+      <div class="pc-title">AI Email Summarizer & Auto-Reply Agent</div>
+      <div class="pc-desc">Zero-touch email automation using n8n + Gemini AI. Classifies emails by intent, assesses urgency, and sends contextual replies — all logged to Google Sheets.</div>
+      <div class="pc-tags">
+        <span class="pc-tag">n8n</span>
+        <span class="pc-tag">Gemini AI</span>
+        <span class="pc-tag">Gmail API</span>
+        <span class="pc-tag">Google Sheets</span>
+        <span class="pc-tag">Agentic</span>
+      </div>
+      <div class="pc-bottom">
+        <span class="featured-badge">★ Featured</span>
+        <a href="https://github.com/insjunaid/n8n-gmail-ai-agent" target="_blank" class="pc-source-link"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg> Source</a>
+      </div>
+    </div>
+    <!-- 4. MindfulAI -->
+    <div class="project-card fade-up">
+      <div class="pc-top">
+        <div></div>
+        <div class="pc-domain">NLP · Mental Health</div>
+      </div>
+      <div class="pc-title">MindfulAI — Mental Health Support Platform</div>
+      <div class="pc-desc">AI-powered mental health platform using NLP for emotion detection and sentiment analysis. Flask-based app with a compassionate conversational interface.</div>
+      <div class="pc-tags">
+        <span class="pc-tag">NLP</span>
+        <span class="pc-tag">Sentiment Analysis</span>
+        <span class="pc-tag">Emotion Detection</span>
+        <span class="pc-tag">Python</span>
+        <span class="pc-tag">Flask</span>
+      </div>
+      <div class="pc-bottom">
+        <span></span>
+        <a href="https://github.com/insjunaid/MindFul-AI" target="_blank" class="pc-source-link"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg> Source</a>
+      </div>
+    </div>
+    <!-- 5. PowerBI -->
+    <div class="project-card fade-up">
+      <div class="pc-top">
+        <div></div>
+        <div class="pc-domain">Business Intelligence · Analytics</div>
+      </div>
+      <div class="pc-title">PowerBI Retail Sales Report</div>
+      <div class="pc-desc">End-to-end BI solution analyzing sales, customer behavior, and regional trends with interactive drill-down dashboards and KPI tracking.</div>
+      <div class="pc-tags">
+        <span class="pc-tag">Power BI</span>
+        <span class="pc-tag">DAX</span>
+        <span class="pc-tag">Data Modeling</span>
+        <span class="pc-tag">EDA</span>
+      </div>
+      <div class="pc-bottom">
+        <span></span>
+        <a href="https://github.com/insjunaid/PowerBI-Retail-Sales-Dashboard" target="_blank" class="pc-source-link"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg> Source</a>
+      </div>
+    </div>
+    <!-- 6. SQL -->
+    <div class="project-card fade-up">
+      <div class="pc-top">
+        <div></div>
+        <div class="pc-domain">Data Analysis · SQL</div>
+      </div>
+      <div class="pc-title">Retail Sales Analysis using SQL</div>
+      <div class="pc-desc">SQL-based intelligence uncovering insights from retail data — customer segmentation, product performance, and seasonal trend analysis.</div>
+      <div class="pc-tags">
+        <span class="pc-tag">MySQL</span>
+        <span class="pc-tag">CTEs</span>
+        <span class="pc-tag">Window Functions</span>
+        <span class="pc-tag">Data Analysis</span>
+      </div>
+      <div class="pc-bottom">
+        <span></span>
+        <a href="https://github.com/insjunaid/sql-retail-analysis" target="_blank" class="pc-source-link"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg> Source</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── EXPERIENCE ─── -->
+<section id="experience">
+  <div style="max-width:1160px;margin:0 auto;">
+    <div class="section-label fade-up">Work experience</div>
+    <h2 class="section-title fade-up">Where I've worked</h2>
+    <div class="exp-timeline">
+      <div class="exp-item fade-up">
+        <div class="exp-card">
+          <div class="exp-header">
+            <div class="exp-title">AI Engineer</div>
+            <span class="exp-badge">Current</span>
+          </div>
+          <div class="exp-company">Aerospace Industry</div>
+          <div class="exp-meta">📍 India · 2026 – Present</div>
+          <ul class="exp-bullets">
+            <li>Solving real-time problems with applied AI — turning the company's complex tasks into simple, dependable workflows.</li>
+            <li>Delivering AI-driven solutions that bring clarity to business decisions.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="exp-item fade-up">
+        <div class="exp-card">
+          <div class="exp-header">
+            <div class="exp-title">AI / ML Intern</div>
+            <span class="exp-badge done">Completed</span>
+          </div>
+          <div class="exp-company">Learners Byte Global Infovision</div>
+          <div class="exp-meta">📍 India · 2026 – June 2026</div>
+          <ul class="exp-bullets">
+            <li>Built and evaluated ML models achieving 85% accuracy across classification tasks.</li>
+            <li>Processed and cleaned datasets with 10,000+ records; improved model performance by ~15% through feature engineering.</li>
+            <li>Applied statistical analysis and data visualization techniques to surface actionable business insights.</li>
+            <li>Collaborated in an Agile team environment to iterate and optimize ML pipelines.</li>
+          </ul>
+          <div class="exp-skills">
+            <span class="stag">Python</span>
+            <span class="stag">Scikit-learn</span>
+            <span class="stag">Pandas</span>
+            <span class="stag">Data Visualization</span>
+            <span class="stag">TensorFlow</span>
+            <span class="stag">PyTorch</span>
+          </div>
+        </div>
+      </div>
+      <div class="exp-item fade-up">
+        <div class="exp-card">
+          <div class="exp-header">
+            <div class="exp-title">Data Science Intern</div>
+            <span class="exp-badge done">Completed</span>
+          </div>
+          <div class="exp-company">Kodnest</div>
+          <div class="exp-meta">📍 India · 2026</div>
+          <ul class="exp-bullets">
+            <li>Leveraged statistical modeling on 100,000+ records to identify market trends, achieving a 15% increase in forecast precision.</li>
+            <li>Engineered automated data pipelines that reduced manual preprocessing time by 60% using Python and SQL.</li>
+            <li>Developed interactive Power BI dashboards that visualized 25+ key business metrics for executive stakeholders.</li>
+            <li>Built and fine-tuned predictive models using Scikit-learn, improving classification accuracy by 12% through advanced feature engineering.</li>
+          </ul>
+          <div class="exp-skills">
+            <span class="stag">Python</span>
+            <span class="stag">Pandas</span>
+            <span class="stag">Power BI</span>
+            <span class="stag">SQL</span>
+            <span class="stag">EDA</span>
+            <span class="stag">TensorFlow</span>
+          </div>
+          <div style="display: flex; justify-content: flex-end; margin-top: 12px;">
+            <a href="https://drive.google.com/file/d/1ffSAIJD2KhXgiW37cbGch8IS4D4kMmY5/view?usp=sharing" target="_blank" class="cert-verify">View Certificate</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CERTIFICATIONS ─── -->
+<section id="certifications">
+  <div class="section-label fade-up">Credentials</div>
+  <h2 class="section-title fade-up">Professional certifications</h2>
+  <p class="fade-up" style="color:var(--text2);font-size:0.92rem;margin-bottom:0;max-width:480px;">All certifications are verified and accessible. Industry-recognized credentials from top institutions.</p>
+  <div class="cert-grid">
+    <div class="cert-card fade-up">
+      <div class="cert-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="var(--accent)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>
+      <div class="cert-body">
+        <div class="cert-name">Data Science with Python</div>
+        <div class="cert-issuer">IBM via Coursera</div>
+        <a href="https://www.coursera.org/account/accomplishments/verify/6O602919JBZY" target="_blank" class="cert-verify">Verify credential</a>
+      </div>
+    </div>    <div class="cert-card fade-up">
+      <div class="cert-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="var(--accent)"><path d="M19.35 10.04A7.49 7.49 0 0012 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 000 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM10 17l-3.5-3.5 1.41-1.41L10 14.17l4.59-4.58L16 11l-6 6z"/></svg></div>
+      <div class="cert-body">
+        <div class="cert-name">Machine Learning with Python</div>
+        <div class="cert-issuer">IBM via Coursera</div>
+        <a href="https://www.coursera.org/account/accomplishments/verify/WVNP5DQOJY6Q" target="_blank" class="cert-verify">Verify credential</a>
+      </div>
+    </div>    <div class="cert-card fade-up">
+      <div class="cert-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="var(--accent)"><path d="M21 10.12h-6.78l2.74-2.82c-2.73-2.7-7.15-2.8-9.88-.1-2.73 2.71-2.73 7.08 0 9.79s7.15 2.71 9.88 0C18.32 15.65 19 14.08 19 12.1h2c0 1.98-.88 4.55-2.64 6.29-3.51 3.48-9.21 3.48-12.72 0-3.5-3.47-3.5-9.11 0-12.58 3.51-3.47 9.14-3.49 12.65-.06L21 3v7.12zM12.5 8v4.25l3.5 2.08-.72 1.21L11 13V8h1.5z"/></svg></div>
+      <div class="cert-body">
+        <div class="cert-name">Generative AI Fundamentals</div>
+        <div class="cert-issuer">IBM via Coursera</div>
+        <a href="https://www.coursera.org/account/accomplishments/verify/H0BED7BX2NLT" target="_blank" class="cert-verify">Verify credential</a>
+      </div>
+    </div>    <div class="cert-card fade-up">
+      <div class="cert-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="var(--accent)"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
+      <div class="cert-body">
+        <div class="cert-name">Google Data Analytics Professional Certificate</div>
+        <div class="cert-issuer">Google via Coursera</div>
+        <a href="https://www.coursera.org/account/accomplishments/professional-cert/FOKMNO6ZA537" target="_blank" class="cert-verify">Verify credential</a>
+      </div>
+    </div>    <div class="cert-card fade-up">
+      <div class="cert-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="var(--accent)"><path d="M19.35 10.04A7.49 7.49 0 0012 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 000 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg></div>
+      <div class="cert-body">
+        <div class="cert-name">Google Cloud Machine Learning Operations (MLOps)</div>
+        <div class="cert-issuer">Google Cloud via Coursera</div>
+        <a href="https://www.coursera.org/account/accomplishments/verify/IWFIBUI7FLE5" target="_blank" class="cert-verify">Verify credential</a>
+      </div>
+    </div>    <div class="cert-card fade-up">
+      <div class="cert-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="var(--accent)"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.488.488 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.6 3.6 0 0112 15.6z"/></svg></div>
+      <div class="cert-body">
+        <div class="cert-name">DevOps, DataOps & MLOps</div>
+        <div class="cert-issuer">Duke University via Coursera</div>
+        <a href="https://www.coursera.org/account/accomplishments/verify/3D418F5KCNTD" target="_blank" class="cert-verify">Verify credential</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── ACHIEVEMENTS ─── -->
+<section id="achievements">
+  <div style="max-width:1160px;margin:0 auto;">
+    <div class="section-label fade-up">Beyond Algorithms</div>
+    <h2 class="section-title fade-up">Achievements</h2>
+    <p class="fade-up" style="color:var(--text2);max-width:480px;font-size:0.92rem;margin-bottom:0;">Competitions, leadership, and community contributions that define who I am outside the terminal.</p>
+  </div>
+  <div class="ach-grid">
+    <div class="ach-card fade-up">
+      <span class="ach-icon">🏆</span>
+      <div class="ach-title">Project Expo Winner</div>
+      <div class="ach-desc">Won the department project expo for building the best project — recognized for technical excellence, innovation, and real-world impact.</div>
+    </div>
+    <div class="ach-card fade-up">
+      <span class="ach-icon">⚖️</span>
+      <div class="ach-title">Hackathon Evaluator</div>
+      <div class="ach-desc">Served as ML domain evaluator for Xypher Hackathon, assessing 20+ projects for technical innovation and real-world applicability.</div>
+    </div>
+    <div class="ach-card fade-up">
+      <span class="ach-icon">🎙️</span>
+      <div class="ach-title">Workshop Facilitator</div>
+      <div class="ach-desc">Conducted 2 hands-on ML/AI workshops for 100+ peers — covering model building, deployment, and career guidance in AI.</div>
+    </div>
+    <div class="ach-card fade-up">
+      <span class="ach-icon">🌐</span>
+      <div class="ach-title">Multilingual Communicator</div>
+      <div class="ach-desc">Fluent in English, Kannada, Urdu, and Hindi — enabling effective cross-cultural collaboration and inclusive team communication.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT ─── -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-left fade-up">
+      <div class="section-label">Connect</div>
+      <div class="big-text">Let's build<br>something <em>together</em></div>
+      <p>Always interested in collaborations, interesting problems, and conversations about code, design, and everything in between.</p>
+      <a href="mailto:shariffjunaid2004@gmail.com" class="connect-cta">Reach Out →</a>
+    </div>
+    <div class="fade-up">
+      <div class="section-label" style="text-align:right;margin-bottom:32px;">Find me elsewhere</div>
+      <div class="connect-links-list">
+        <a href="https://github.com/insjunaid" target="_blank" class="connect-link-row">
+          <span class="connect-handle">@insjunaid</span>
+          <span class="connect-platform">GitHub <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></span>
+        </a>
+        <a href="https://www.linkedin.com/in/junaid-shariff10/" target="_blank" class="connect-link-row">
+          <span class="connect-handle">/in/junaid-shariff10</span>
+          <span class="connect-platform">LinkedIn <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></span>
+        </a>
+        <a href="mailto:shariffjunaid2004@gmail.com" class="connect-link-row">
+          <span class="connect-handle">shariffjunaid2004@gmail.com</span>
+          <span class="connect-platform">Email <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-left">© 2026 Junaid Shariff — Code with character, built with care</div>
+  <div class="footer-right">
+    <a href="https://github.com/insjunaid" target="_blank" class="social-icon" title="GitHub"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+    <a href="https://www.linkedin.com/in/junaid-shariff10/" target="_blank" class="social-icon" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+    <a href="mailto:shariffjunaid2004@gmail.com" class="social-icon" title="Email"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
+  </div>
+</footer>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

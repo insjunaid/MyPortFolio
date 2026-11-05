@@ -23,6 +23,10 @@
   --tag-text: #e2f0f8;
   --green: #d8f3ff;
   --net-rgb: 200, 230, 245;
+  --panel: rgba(4, 14, 20, 0.5);
+  --panel-solid: #04101a;
+  --panel-line: rgba(214, 236, 248, 0.34);
+  --panel-shadow: none;
   --card-shadow: 0 0 0 1px rgba(214, 236, 248, 0.3), 0 0 24px rgba(200, 235, 255, 0.08);
   /* skeleton reveal */
   --xr-outline: 1px dashed rgba(190, 225, 245, 0.14);
@@ -61,7 +65,8 @@
 :is(.xr, .lens-doc) :is(.project-card, .skill-cat, .exp-card, .cert-card, .ach-card, .astat, .edu-card, .hero-ide-card) {
   box-shadow: var(--card-shadow);
 }
-html.xr body { background-image: var(--xr-grid); background-attachment: fixed; }
+html.xr #sky { display: none; }
+html.xr body { background-color: var(--bg); background-image: var(--xr-grid); background-attachment: fixed; }
 html.xr body::after {
   content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
   background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.55) 100%);

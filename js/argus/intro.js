@@ -9,12 +9,12 @@ import { fly, scatter, cancelAll } from './particles.js';
 import { SIZE } from './argus.js';
 
 const LOG = [
-  ['> mounting optical sensor', 'ok'],
-  ['> loading vision weights', 'ok'],
-  ['> calibrating attention heads', '12/12'],
-  ['> building feature pyramid', 'ok'],
-  ['> scanning environment', '…'],
-  ['> subject detected', 'human 0.97', 'hit'],
+  ['> avionics power', 'on'],
+  ['> flight controls', 'free'],
+  ['> vision core', 'ok'],
+  ['> engines 1 + 2', 'stable'],
+  ['> crew detected', 'human 0.97', 'hit'],
+  ['> tower', 'cleared for takeoff', 'hit'],
 ];
 
 export async function runIntro(argus, { anchor, onReveal }) {

@@ -46,6 +46,7 @@ export function initEgg() {
       hold: 3800,
     });
     storm();
+    emit('flyby');
     // Let any in-flight teleport land first.
     for (let i = 0; i < 30 && argus && argus.busy; i++) await sleep(50);
     if (!env.reducedMotion && argus && argus.visible) await particleShow(argus);

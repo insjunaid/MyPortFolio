@@ -1,0 +1,125 @@
+/* ═══ X-Ray mode — a radiograph of the page ═══
+   Everything is driven by inherited custom properties, so the same rules render the X-ray page
+   (html.xr) and the lens clone (.xr / .xr-off), whichever way round the lens is showing. */
+
+.xr {
+  --bg: #010406;
+  --bg2: #02070a;
+  --bg3: #04101a;
+  --section-alt: rgba(2, 9, 14, 0.35);
+  --surface: rgba(6, 18, 26, 0.35);
+  --surface2: rgba(12, 30, 42, 0.5);
+  --border: rgba(214, 236, 248, 0.24);
+  --border2: rgba(214, 236, 248, 0.4);
+  --text: #f0f9fd;
+  --text2: #c6dae5;
+  --text3: #98b0bd;
+  --accent: #e2f0f8;
+  --accent-rgb: 226, 240, 248;
+  --accent2: #a9d8ef;
+  --on-accent: #021016;
+  --accent-glow: rgba(226, 240, 248, 0.1);
+  --tag-bg: rgba(226, 240, 248, 0.07);
+  --tag-text: #e2f0f8;
+  --green: #d8f3ff;
+  --net-rgb: 200, 230, 245;
+  --card-shadow: 0 0 0 1px rgba(214, 236, 248, 0.3), 0 0 24px rgba(200, 235, 255, 0.08);
+  /* skeleton reveal */
+  --xr-outline: 1px dashed rgba(190, 225, 245, 0.14);
+  --xr-display: block;
+  --xr-img: grayscale(1) invert(1) brightness(1.5) contrast(1.4);
+  --xr-mono: grayscale(1) brightness(1.45) contrast(1.1);
+  --xr-grid:
+    repeating-linear-gradient(90deg, rgba(200, 230, 245, 0.045) 0 1px, transparent 1px calc(100% / 12)),
+    radial-gradient(ellipse at 50% 40%, rgba(120, 170, 200, 0.07), transparent 70%);
+  text-shadow: 0 0 7px rgba(200, 235, 255, 0.35);
+}
+.xr-off {
+  --xr-outline: 0 solid transparent;
+  --xr-display: none;
+  --xr-img: none;
+  --xr-mono: none;
+  --xr-grid: none;
+  text-shadow: none;
+}
+
+/* Structure revealed: every layout box gets a faint dashed bone outline */
+:is(.xr, .lens-doc) :is(section, main, nav, footer, div, ul, li) { outline: var(--xr-outline, 0 solid transparent); outline-offset: -1px; }
+.xr :focus-visible { outline: 2px solid var(--accent) !important; }
+:is(.xr, .lens-doc) img { filter: var(--xr-img, none); }
+:is(.xr, .lens-doc) :is(.skill-cat-icon, .ach-icon, .cert-icon, .ide-body, .ide-dots, .edu-card .cgpa) { filter: var(--xr-mono, none); }
+
+/* DOM tags printed on each section, like annotations on a film */
+:is(.xr, .lens-doc) main > section::after {
+  content: '<section#' attr(id) '>';
+  display: var(--xr-display, none);
+  position: absolute; top: 10px; right: clamp(16px, 4vw, 48px);
+  font: 400 10px/1 var(--mono); letter-spacing: 0.1em; color: rgba(214, 236, 248, 0.45);
+  text-shadow: none;
+}
+/* Cards become translucent "bones" */
+:is(.xr, .lens-doc) :is(.project-card, .skill-cat, .exp-card, .cert-card, .ach-card, .astat, .edu-card, .hero-ide-card) {
+  box-shadow: var(--card-shadow);
+}
+html.xr body { background-image: var(--xr-grid); background-attachment: fixed; }
+html.xr body::after {
+  content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+}
+html.xr #typewriter-text { background-image: linear-gradient(120deg, #f0f9fd, #a9d8ef, #f0f9fd); }
+html.xr .hud-top::after { content: '· RADIOGRAPH · 120 kVp · 4 mAs'; color: var(--text3); }
+
+/* Exposure flash when toggling */
+.xr-flash {
+  position: fixed; inset: 0; z-index: 9970; pointer-events: none;
+  background: linear-gradient(to bottom, transparent 0%, rgba(200, 235, 255, 0.0) 40%, rgba(220, 245, 255, 0.55) 50%, rgba(200, 235, 255, 0) 60%, transparent 100%);
+  background-size: 100% 300%;
+  animation: xr-expose 0.55s ease-in-out forwards;
+}
+@keyframes xr-expose {
+  from { background-position: 0 100%; opacity: 1; }
+  to { background-position: 0 0; opacity: 0.2; }
+}
+
+/* ─── The lens: a circular window onto a live clone of the page in the opposite mode ─── */
+#xray-lens {
+  position: fixed; left: 0; top: 0; z-index: 9000; pointer-events: none;
+  width: var(--lens-d); height: var(--lens-d); border-radius: 50%; overflow: hidden;
+  opacity: 0; transition: opacity 0.25s; will-change: transform;
+  -webkit-mask-image: radial-gradient(circle, #000 68%, transparent 71%);
+  mask-image: radial-gradient(circle, #000 68%, transparent 71%);
+}
+#xray-lens.is-on { opacity: 1; }
+.lens-doc { position: absolute; left: 0; top: 0; background: var(--bg); background-image: var(--xr-grid); }
+.lens-doc .fade-up { opacity: 1 !important; transform: none !important; }
+.lens-ring {
+  position: fixed; left: 0; top: 0; z-index: 9001; pointer-events: none;
+  width: var(--lens-d); height: var(--lens-d); border-radius: 50%;
+  border: 1px solid rgba(226, 240, 248, 0.55);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4), 0 0 24px rgba(200, 235, 255, 0.18), inset 0 0 30px rgba(200, 235, 255, 0.12);
+  opacity: 0; transition: opacity 0.25s; will-change: transform;
+}
+.lens-ring.is-on { opacity: 1; }
+.lens-ring::before, .lens-ring::after { content: ''; position: absolute; background: rgba(226, 240, 248, 0.6); }
+.lens-ring::before { left: 50%; top: -6px; width: 1px; height: 10px; box-shadow: 0 calc(var(--lens-d) + 2px) 0 rgba(226, 240, 248, 0.6); }
+.lens-ring::after { top: 50%; left: -6px; height: 1px; width: 10px; box-shadow: calc(var(--lens-d) + 2px) 0 0 rgba(226, 240, 248, 0.6); }
+.lens-tag {
+  position: absolute; left: 50%; bottom: -20px; transform: translateX(-50%);
+  font: 500 9px/1 var(--mono); letter-spacing: 0.14em; color: rgba(226, 240, 248, 0.8); white-space: nowrap;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
+}
+
+/* Inside the lens the radiograph is pushed harder so it reads at a glance */
+.lens-doc.xr {
+  --xr-outline: 1px dashed rgba(200, 232, 248, 0.38);
+  --border: rgba(214, 236, 248, 0.5);
+  --border2: rgba(214, 236, 248, 0.65);
+  filter: grayscale(1) contrast(1.25) brightness(1.12);
+}
+#xray-lens::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    repeating-linear-gradient(to bottom, rgba(200, 235, 255, 0.05) 0 1px, transparent 1px 3px),
+    radial-gradient(circle, rgba(120, 200, 255, 0.1), rgba(0, 10, 20, 0.35) 72%);
+}
+html.xr #xray-lens::after { background: radial-gradient(circle, transparent 60%, rgba(0, 0, 0, 0.35) 72%); }

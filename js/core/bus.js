@@ -1,6 +1,6 @@
 // Tiny event bus so effects can talk without importing each other.
 // Events: 'sector' {id,index,el} · 'theme' {dark} · 'xray' {on} · 'argus:say' {text} · 'argus:gaze' {x,y}
-//         'intro:done' · 'detect:burst' {section} · 'egg'
+//         'intro:done' · 'takeoff' · 'flyby' · 'flight:callout' {text} · 'argus:poke'
 const target = new EventTarget();
 
 export function emit(name, detail) {

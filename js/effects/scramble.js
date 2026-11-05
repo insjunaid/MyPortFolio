@@ -2,7 +2,6 @@
 // absolutely-positioned overlay cycles glyphs and resolves left→right, so there is zero layout shift
 // and screen readers only ever see the real text.
 import { addTask } from '../core/loop.js';
-import { qsa } from '../core/util.js';
 
 // Glyphs keep the case of the character they stand in for, so the decoding text keeps roughly
 // the same width and doesn't spill onto extra lines.
@@ -69,16 +68,4 @@ export function scramble(el, { duration = 900, delay = 0 } = {}) {
       }
     });
   });
-}
-
-/** Decode section headings the first time they scroll into view. */
-export function initHeadingScramble() {
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (!e.isIntersecting) return;
-      io.unobserve(e.target);
-      scramble(e.target, { duration: 850, delay: 120 });
-    });
-  }, { threshold: 0.6 });
-  qsa('main section:not(#home) .section-title, .contact-left .big-text').forEach((el) => io.observe(el));
 }

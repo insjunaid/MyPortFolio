@@ -1,0 +1,357 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   The flight — layouts for the climb from runway to the edge of space.
+   All reading text sits on panels, so it stays legible over any sky.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+:root, .xr-off {
+  --panel: rgba(7, 12, 19, 0.96);
+  --panel-solid: #0a1119;
+  --panel-line: rgba(160, 220, 255, 0.16);
+  --panel-shadow: 0 24px 60px rgba(0, 0, 0, 0.32);
+}
+[data-theme="light"], [data-theme="light"] .xr-off {
+  --panel: rgba(255, 255, 255, 0.96);
+  --panel-solid: #ffffff;
+  --panel-line: rgba(10, 30, 45, 0.14);
+  --panel-shadow: 0 24px 60px rgba(10, 40, 80, 0.16);
+}
+
+/* Sticky stages need clip rather than hidden */
+body { overflow-x: clip; }
+body::before { display: none; }
+
+/* ─── Sky + flight layers ─── */
+#sky, #flight-fx { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+#sky { opacity: 0; transition: opacity 0.8s ease; }
+#sky.is-ready { opacity: 1; }
+/* The same sky as a plain gradient: shows until the shader is ready, and stays if WebGL is unavailable */
+:root { --sky-z: #070d1f; --sky-h: #26304f; }
+[data-theme="light"] { --sky-z: #5fa8e0; --sky-h: #fde6c8; }
+body { background: linear-gradient(to bottom, var(--sky-z), var(--sky-h)) fixed; }
+.calm body { background: var(--bg); }
+.flyby-layer { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 9983; pointer-events: none; }
+
+/* ─── Shared section furniture ─── */
+#about, #projects, #achievements, #contact { background: none; }
+section { padding-top: clamp(28px, 4vw, 52px); padding-bottom: clamp(28px, 4vw, 52px); }
+.sky-gap { position: relative; z-index: 1; display: grid; place-items: center; height: clamp(230px, 50vh, 480px); pointer-events: none; }
+.gap-tag {
+  padding: 7px 13px 6px; border-radius: 4px;
+  font: 500 11px/1 var(--mono); letter-spacing: 0.32em; text-indent: 0.32em; color: #e9f1f5;
+  background: rgba(4, 8, 13, 0.62); border: 1px solid rgba(190, 230, 255, 0.28);
+}
+.section-label {
+  display: inline-flex; padding: 6px 10px 5px; margin-bottom: 14px; border-radius: 4px;
+  background: var(--panel-solid); border: 1px solid var(--panel-line);
+}
+.sec-head {
+  margin-bottom: 22px; padding: clamp(18px, 2.4vw, 28px);
+  background: var(--panel); border: 1px solid var(--panel-line); border-radius: var(--radius);
+  box-shadow: var(--panel-shadow);
+}
+.sec-head .section-title { margin-bottom: 0; }
+.sec-head p { margin-top: 14px; }
+#skills, #experience, #certifications { max-width: 1240px; }
+
+/* Scroll reveal uses the independent `translate` so card tilt can own `transform` */
+.js .fade-up { transform: none; translate: 0 34px; transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), translate 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.js .fade-up.visible { translate: 0 0; }
+
+/* ─── Split-flap titles ─── */
+.sf-ready { --t: min(clamp(21px, 3.3vw, 46px), calc((100vw - 96px) / 10.6)); margin-bottom: 0; }
+.sf-board { display: flex; flex-direction: column; gap: 6px; }
+.sf-line { display: flex; flex-wrap: wrap; gap: 6px calc(var(--t) * 0.34); }
+.sf-word { display: inline-flex; gap: 2px; }
+.sf-t {
+  position: relative; display: inline-block; flex: none;
+  width: calc(var(--t) * 0.74); height: calc(var(--t) * 1.16);
+  font: 500 var(--t)/1 var(--mono); color: #f3efe4; perspective: 220px;
+}
+.sf-accent { color: #5ce1ff; }
+.sf-h { position: absolute; left: 0; right: 0; height: 50%; overflow: hidden; background: #10171f; }
+.sf-up { top: 0; border-radius: 3px 3px 0 0; background: linear-gradient(#1a232d, #10171f); transform-origin: 50% 100%; border-bottom: 1px solid rgba(0, 0, 0, 0.7); }
+.sf-dn { bottom: 0; border-radius: 0 0 3px 3px; background: linear-gradient(#0d131a, #151d26); transform-origin: 50% 0; }
+.sf-h b { position: absolute; left: 0; right: 0; height: 200%; display: grid; place-items: center; font-weight: 500; }
+.sf-h b::before { content: attr(data-c); }
+.sf-up b { top: 0; }
+.sf-dn b { bottom: 0; }
+.sf-leaf { visibility: hidden; z-index: 2; backface-visibility: hidden; }
+
+/* ─── Takeoff (hero) ─── */
+#home {
+  min-height: 100vh; min-height: 100svh; max-width: none;
+  padding: calc(var(--nav-h) + 24px) clamp(18px, 6vw, 96px) 23vh;
+}
+.hero-inner { width: 100%; max-width: 1320px; margin: 0 auto; grid-template-columns: minmax(0, 1.28fr) minmax(0, 0.9fr); gap: clamp(24px, 5vw, 72px); }
+.hero-name { font-size: clamp(2.9rem, 7.3vw, 7.6rem); }
+#home .hero-label, .hero-name, #typewriter-text, .hero-tagline { text-shadow: 0 2px 22px rgba(0, 0, 0, 0.35); }
+[data-theme="light"] #home .hero-label, [data-theme="light"] .hero-name, [data-theme="light"] .hero-tagline { text-shadow: 0 1px 14px rgba(255, 255, 255, 0.5); }
+#typewriter-text { text-shadow: none; }
+.hero-tagline { color: var(--text); max-width: 540px; }
+.hero-ide-card { background: var(--panel); transform: perspective(1500px) rotateY(-8deg) rotateX(2deg); transform-origin: 100% 50%; box-shadow: var(--panel-shadow); }
+.scroll-hint { color: var(--text); margin-top: 34px; }
+/* A code editor stays dark in both themes (its syntax colours need it) */
+[data-theme="light"] .hero-ide-card {
+  --panel: rgba(9, 15, 22, 0.97); --surface: #0d131b; --bg3: #0c1118;
+  --text: #e9f1f5; --text2: #9fadb8; --text3: #7f8d98; --border: rgba(160, 220, 255, 0.1); --border2: rgba(160, 220, 255, 0.16);
+  --accent: #5ce1ff; --accent-rgb: 92, 225, 255; --green: #4ade80;
+  color: var(--text);
+}
+
+/* ─── Climb (about) ─── */
+.about-grid { max-width: 1240px !important; grid-template-columns: 1.08fr 1fr; gap: 22px; }
+.about-text { padding: clamp(20px, 2.8vw, 34px); background: var(--panel); border: 1px solid var(--panel-line); border-radius: var(--radius); box-shadow: var(--panel-shadow); }
+.about-text .section-title { margin: 0 0 20px; }
+.edu-card { background: var(--panel); border-color: var(--panel-line); box-shadow: var(--panel-shadow); margin-bottom: 16px; }
+.about-stats { margin-top: 0; grid-template-columns: 1fr 1fr; gap: 14px; }
+.astat {
+  position: relative; display: flex; flex-direction: column; align-items: center; text-align: center;
+  padding: 16px 14px 18px; background: var(--panel); border-color: var(--panel-line); box-shadow: var(--panel-shadow);
+}
+.astat .num { margin-top: -22px; font-family: var(--mono); font-weight: 500; font-size: 1.55rem; }
+.gauge { width: min(100%, 150px); height: auto; overflow: visible; }
+.g-minor, .g-major { stroke: rgba(var(--accent-rgb), 0.35); stroke-width: 1; }
+.g-major { stroke: rgba(var(--accent-rgb), 0.8); stroke-width: 1.6; }
+.g-arc { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; filter: drop-shadow(0 0 4px rgba(var(--accent-rgb), 0.7)); transition: stroke-dashoffset 1.5s cubic-bezier(0.3, 0.9, 0.3, 1); }
+.g-needle { transform-origin: 60px 60px; transform: rotate(-135deg); fill: var(--det-amber); transition: transform 1.6s cubic-bezier(0.3, 1.5, 0.5, 1); }
+.is-live .g-needle { transform: rotate(var(--deg)); }
+.is-live .g-arc { stroke-dashoffset: 0; }
+
+/* ─── Cockpit (skills) ─── */
+.skills-grid { margin-top: 0; gap: 14px; }
+.skill-cat { background: var(--panel); border-color: var(--panel-line); padding: 20px 20px 22px; box-shadow: var(--panel-shadow); }
+.skill-cat::after {
+  content: ''; position: absolute; left: 0; top: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent 70%);
+}
+.skill-cat-icon { margin-bottom: 8px; }
+.skill-cat-name { font-family: var(--mono); font-weight: 500; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; }
+.radar { display: none; position: relative; aspect-ratio: 1; align-self: center; border-radius: 50%; box-shadow: 0 0 0 1px rgba(var(--accent-rgb), 0.25), 0 0 70px rgba(var(--accent-rgb), 0.18), var(--panel-shadow); }
+.radar canvas { display: block; width: 100%; height: 100%; border-radius: 50%; }
+.has-radar .radar { display: block; }
+@media (min-width: 1000px) {
+  .has-radar .skills-grid { grid-template-columns: minmax(0, 1fr) minmax(320px, 1.22fr) minmax(0, 1fr); }
+  .has-radar .radar { grid-column: 2; grid-row: 1 / span 3; width: 100%; }
+  /* Radar is the first div, so the six panels are 2–7: three each side of the scope */
+  .has-radar .skill-cat:nth-of-type(2) { grid-area: 1 / 1; }
+  .has-radar .skill-cat:nth-of-type(3) { grid-area: 2 / 1; }
+  .has-radar .skill-cat:nth-of-type(4) { grid-area: 3 / 1; }
+  .has-radar .skill-cat:nth-of-type(5) { grid-area: 1 / 3; }
+  .has-radar .skill-cat:nth-of-type(6) { grid-area: 2 / 3; }
+  .has-radar .skill-cat:nth-of-type(7) { grid-area: 3 / 3; }
+}
+@media (max-width: 999px) {
+  .radar { grid-column: 1 / -1; width: min(100%, 460px); justify-self: center; }
+}
+
+/* ─── Missions (projects) ─── */
+.projects-header {
+  max-width: 1160px; margin: 0 auto 22px; padding: clamp(18px, 2.4vw, 28px);
+  background: var(--panel); border: 1px solid var(--panel-line); border-radius: var(--radius); box-shadow: var(--panel-shadow);
+}
+.projects-grid { gap: 18px; }
+.project-card {
+  background: var(--panel-solid); border-color: var(--panel-line);
+  padding: 44px 26px 24px; box-shadow: var(--panel-shadow); overflow: hidden;
+  transform-style: preserve-3d;
+}
+.js .project-card.fade-up, .js .project-card.fade-up.visible, .project-card:hover {
+  transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+}
+.js .project-card.fade-up { transition: opacity 0.7s, translate 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.18s ease-out, border-color 0.3s, box-shadow 0.3s; }
+.project-card::before {
+  content: ''; position: absolute; left: 0; right: 0; top: 0; height: 6px;
+  background: repeating-linear-gradient(-45deg, var(--det-amber) 0 10px, #15191f 10px 20px);
+}
+.project-card::after {
+  background: radial-gradient(420px circle at var(--gx, 50%) var(--gy, 0%), rgba(var(--accent-rgb), 0.17), transparent 62%);
+}
+.project-card:hover { border-color: rgba(var(--accent-rgb), 0.6); box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4), 0 0 44px rgba(var(--accent-rgb), 0.16); }
+.pc-stamp {
+  position: absolute; left: 26px; top: 20px; font: 500 11px/1 var(--mono); letter-spacing: 0.22em; color: var(--text3);
+}
+.pc-top { justify-content: flex-end; min-height: 18px; }
+.pc-top > div:empty { display: none; }
+.pc-domain { position: absolute; right: 26px; top: 19px; }
+.pc-title { font-size: 1.14rem; }
+.featured-badge { transform: rotate(-3deg); border-radius: 3px; border-width: 1.5px; text-transform: uppercase; letter-spacing: 0.1em; }
+
+.missions-h #projects { max-width: none; padding: 0; }
+.missions-h .missions-pin { position: sticky; top: 0; height: 100vh; overflow: clip; display: flex; align-items: center; }
+.missions-h .mission-track { display: flex; align-items: stretch; gap: 22px; width: max-content; padding: var(--nav-h) 60px 0 clamp(40px, 8vw, 130px); will-change: transform; }
+.missions-h .projects-header { width: 400px; flex: none; margin: 0; display: flex; flex-direction: column; justify-content: center; }
+.missions-h .projects-header .sf-ready { --t: 27px; }
+.missions-h .projects-header .section-label { align-self: flex-start; }
+.projects-header p { margin-top: 14px; }
+.missions-h .projects-grid { display: flex; align-items: stretch; gap: 22px; max-width: none; margin: 0; }
+.missions-h .project-card { width: 430px; flex: none; }
+
+/* ─── Flight path (experience) ─── */
+.exp-timeline {
+  position: relative; margin-top: 0; padding: clamp(30px, 5vw, 70px) clamp(16px, 3vw, 40px);
+  background-color: var(--panel);
+  background-image:
+    linear-gradient(rgba(var(--accent-rgb), 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--accent-rgb), 0.08) 1px, transparent 1px),
+    radial-gradient(ellipse 34% 22% at 18% 24%, rgba(var(--accent-rgb), 0.08), transparent 70%),
+    radial-gradient(ellipse 30% 26% at 82% 66%, rgba(var(--accent-rgb), 0.08), transparent 70%);
+  background-size: 64px 64px, 64px 64px, 100% 100%, 100% 100%;
+  border: 1px solid var(--panel-line); border-radius: var(--radius); box-shadow: var(--panel-shadow); overflow: hidden;
+}
+.exp-timeline::before { display: none; }
+.route-map { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.route-base { fill: none; stroke: rgba(var(--accent-rgb), 0.22); stroke-width: 2; stroke-dasharray: 3 9; stroke-linecap: round; }
+.route-line { fill: none; stroke: var(--accent); stroke-width: 2.6; stroke-linecap: round; filter: drop-shadow(0 0 5px rgba(var(--accent-rgb), 0.8)); }
+.route-jet path { fill: var(--det-amber); filter: drop-shadow(0 0 5px rgba(var(--amber-rgb), 0.8)); }
+.exp-item { position: relative; display: block; padding: 0; margin: 0 0 clamp(40px, 7vw, 84px); width: calc(50% - 62px); z-index: 1; }
+.exp-item::before { display: none; }
+.exp-item:last-of-type { margin-bottom: 0; }
+.exp-item:nth-of-type(even) { margin-left: auto; }
+.exp-card { background: var(--panel-solid); border-color: var(--panel-line); }
+.exp-pin {
+  position: absolute; top: 38px; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--panel-solid); border: 2px solid rgba(var(--accent-rgb), 0.4);
+  transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+}
+.exp-item:nth-of-type(odd) .exp-pin { right: -71px; }
+.exp-item:nth-of-type(even) .exp-pin { left: -71px; }
+.exp-pin i { position: absolute; left: 50%; top: -22px; translate: -50% 0; font: 500 10px/1 var(--mono); letter-spacing: 0.12em; white-space: nowrap; color: var(--text3); }
+.exp-item.is-reached .exp-pin { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 5px rgba(var(--accent-rgb), 0.18), 0 0 20px rgba(var(--accent-rgb), 0.8); }
+.exp-item.is-reached .exp-pin i { color: var(--accent); }
+
+/* ─── Wings (certifications) ─── */
+.cert-grid { margin-top: 0; gap: 14px; }
+.cert-card {
+  flex-direction: column; align-items: center; text-align: center; gap: 12px;
+  padding: 24px 20px; background: var(--panel); border-color: var(--panel-line); box-shadow: var(--panel-shadow);
+}
+.cert-body { align-items: center; width: 100%; }
+.cert-verify { align-self: center; margin-top: 10px; }
+.cert-crest { display: flex; align-items: center; justify-content: center; width: 100%; }
+.cert-icon {
+  align-self: center; width: 54px; height: 54px; border-radius: 50%; position: relative; z-index: 1;
+  background: var(--panel-solid); border: 2px solid var(--accent);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.12), 0 0 18px rgba(var(--accent-rgb), 0.3);
+}
+.wing { width: clamp(58px, 7vw, 86px); flex: none; margin-right: -5px; fill: var(--accent); opacity: 0.88; transform-origin: 100% 50%; transform: scaleX(0.15); transition: transform 0.9s cubic-bezier(0.2, 0.9, 0.2, 1) 0.15s; }
+.wing-r { margin: 0 0 0 -5px; transform-origin: 0 50%; }
+.cert-card.visible .wing { transform: scaleX(1); }
+.no-js .wing, html:not(.js) .wing { transform: scaleX(1); }
+
+/* ─── Medals (achievements) ─── */
+.ach-grid { margin-top: 0; gap: 14px; }
+#achievements .sec-head { margin-bottom: 22px; }
+.ach-card { text-align: center; padding: 28px 22px; background: var(--panel); border-color: var(--panel-line); box-shadow: var(--panel-shadow); }
+.ach-icon {
+  position: relative; display: grid; place-items: center; width: 112px; height: 112px; margin: 0 auto 18px;
+  font-size: 2.5rem; border-radius: 50%;
+  background: radial-gradient(circle at 35% 28%, #24384b, #0c1722 68%);
+  box-shadow: 0 0 0 3px var(--det-amber), 0 0 0 7px #0c1722, 0 0 0 9px rgba(var(--amber-rgb), 0.55), 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+.ach-icon::before {
+  content: ''; position: absolute; inset: 8px; border-radius: 50%;
+  border: 2px dashed rgba(233, 241, 245, 0.45); transition: rotate 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.ach-card:hover .ach-icon::before { rotate: 180deg; }
+
+/* ─── Landing / ATC (contact) ─── */
+.contact-inner {
+  position: relative; max-width: 1120px; gap: 0; grid-template-columns: 1.3fr 1fr; align-items: stretch;
+  background: var(--panel-solid); border-radius: 22px; box-shadow: var(--panel-shadow); overflow: hidden;
+  --cut: 56.5%;
+  -webkit-mask: radial-gradient(circle 15px at var(--cut) 0, transparent 97%, #000) top / 100% 51% no-repeat, radial-gradient(circle 15px at var(--cut) 100%, transparent 97%, #000) bottom / 100% 51% no-repeat;
+  mask: radial-gradient(circle 15px at var(--cut) 0, transparent 97%, #000) top / 100% 51% no-repeat, radial-gradient(circle 15px at var(--cut) 100%, transparent 97%, #000) bottom / 100% 51% no-repeat;
+}
+.bp-strip {
+  grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  padding: 14px clamp(20px, 3vw, 34px); background: var(--accent); color: var(--on-accent);
+  font: 500 12px/1.2 var(--mono); letter-spacing: 0.18em;
+}
+.contact-inner > .fade-up { padding: clamp(22px, 3.2vw, 38px); }
+.contact-inner > .fade-up:last-child { border-left: 2px dashed var(--panel-line); }
+.contact-left .big-text.sf-ready { --t: min(clamp(21px, 2.7vw, 38px), calc((100vw - 96px) / 10.6)); margin-bottom: 20px; }
+.contact-inner .section-label[style] { display: flex; }
+.bp-code { height: 44px; margin-top: 26px; opacity: 0.8; background: repeating-linear-gradient(90deg, var(--text) 0 2px, transparent 2px 5px, var(--text) 5px 9px, transparent 9px 11px, var(--text) 11px 12px, transparent 12px 16px); }
+footer { background: var(--panel); margin-top: 26vh; }
+
+/* ─── Altimeter ─── */
+#altimeter { position: fixed; right: 14px; top: 22vh; height: 56vh; width: 16px; z-index: 92; pointer-events: none; font: 400 9.5px/1 var(--mono); letter-spacing: 0.12em; color: #dbe7ee; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8); }
+.alt-rail { position: absolute; inset: 0; }
+.alt-scale { position: absolute; inset: 0; opacity: 0.75; background: repeating-linear-gradient(to bottom, rgba(226, 240, 248, 0.75) 0 1px, transparent 1px 45px) right / 14px 100% no-repeat, repeating-linear-gradient(to bottom, rgba(226, 240, 248, 0.4) 0 1px, transparent 1px 9px) right / 7px 100% no-repeat; }
+.alt-fill { position: absolute; right: -1px; top: 0; bottom: 0; width: 2px; transform-origin: 50% 100%; transform: scaleY(0); background: #5ce1ff; box-shadow: 0 0 8px #5ce1ff; }
+.alt-mark { position: absolute; right: 22px; translate: 0 50%; white-space: nowrap; opacity: 0; transition: opacity 0.3s, color 0.3s; }
+.alt-mark.is-near { opacity: 0.85; }
+.alt-bug { position: absolute; right: -4px; width: 24px; height: 2px; background: var(--det-amber); box-shadow: 0 0 8px var(--det-amber); translate: 0 1px; }
+.alt-read {
+  position: absolute; right: -2px; top: calc(100% + 10px); display: grid; justify-items: end; gap: 3px; padding: 5px 8px;
+  white-space: nowrap; color: #e9f1f5; background: rgba(4, 8, 13, 0.82); border: 1px solid rgba(190, 230, 255, 0.3); border-radius: 3px; text-shadow: none;
+}
+.alt-read b { font-size: 12px; font-weight: 500; }
+.alt-read i { position: absolute; opacity: 0; }
+.alt-mach { color: #5ce1ff; }
+
+#flight-callout {
+  position: fixed; left: 50%; top: 21vh; z-index: 96; translate: -50% 10px; max-width: calc(100vw - 32px); text-align: center;
+  padding: 10px 16px 9px; border-radius: 4px; font: 500 12px/1.3 var(--mono); letter-spacing: 0.2em; color: #1a1000; background: var(--det-amber);
+  opacity: 0; transition: opacity 0.25s, translate 0.25s; pointer-events: none;
+}
+#flight-callout.is-on { opacity: 1; translate: -50% 0; }
+
+/* Sonic boom jolt */
+.boom main { animation: boom-shake 0.4s cubic-bezier(0.3, 0.7, 0.3, 1); }
+@keyframes boom-shake { 0% { translate: 0 0; } 15% { translate: -7px 4px; } 35% { translate: 6px -4px; } 55% { translate: -4px 2px; } 75% { translate: 2px -1px; } 100% { translate: 0 0; } }
+
+/* ─── Responsive ─── */
+@media (max-width: 1180px) and (min-width: 901px) {
+  .status-pill { display: none; } /* eight links plus the pill don't fit; the hero label still says it */
+  .nav-links { gap: 22px; }
+}
+@media (max-width: 899px) {
+  #home { padding-bottom: 20vh; }
+  .hero-ide-card { transform: none; }
+  .about-grid { grid-template-columns: 1fr; }
+  .contact-inner { grid-template-columns: 1fr; -webkit-mask: none; mask: none; }
+  .contact-inner > .fade-up:last-child { border-left: 0; border-top: 2px dashed var(--panel-line); }
+  .contact-inner .section-label[style] { text-align: left !important; }
+}
+@media (max-width: 759px) {
+  .exp-timeline { padding: 34px 12px 34px 44px; }
+  .exp-item, .exp-item:nth-of-type(even) { width: 100%; margin-left: 0; }
+  .exp-item:nth-of-type(n) .exp-pin { left: -40px; right: auto; }
+  .exp-pin i { display: none; }
+  .sky-gap { height: 34vh; }
+  .gap-tag { letter-spacing: 0.24em; font-size: 10px; }
+  #altimeter { right: 3px; top: 26vh; height: 44vh; width: 6px; }
+  .alt-scale, .alt-mark { display: none; }
+  .alt-rail::before { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 2px; background: rgba(226, 240, 248, 0.25); }
+  .alt-fill { right: 0; }
+  .alt-bug { right: -1px; width: 8px; }
+  .alt-read { position: fixed; right: 6px; top: calc(var(--nav-h) + 6px); padding: 3px 5px; }
+  #flight-callout { font-size: 10px; letter-spacing: 0.12em; padding: 7px 10px 6px; white-space: nowrap; }
+  .scan-label { display: none; }
+  .alt-read b { font-size: 10px; }
+  .alt-mach { display: none; }
+  .project-card { padding: 42px 18px 20px; }
+  .pc-stamp { left: 18px; }
+  .pc-domain { position: static; white-space: normal; }
+  .pc-top { justify-content: flex-start; }
+}
+@media (max-width: 480px) {
+  section { padding-left: 14px; padding-right: 14px; }
+  .sec-head, .projects-header { padding: 16px; }
+  .about-stats { gap: 10px; }
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  #home { padding-bottom: 16vh; }
+}
+
+/* ─── Reduced motion: scroll-linked state only, nothing moves on its own ─── */
+@media (prefers-reduced-motion: reduce) {
+  .js .fade-up { translate: none; transition: opacity 0.3s; }
+  .g-needle, .g-arc, .wing { transition: none; }
+  .boom main { animation: none; }
+}
+
+/* Long unbuilt headings must never widen their column on small screens */
+.big-text, .section-title { overflow-wrap: anywhere; }
+@media (max-width: 899px) { .contact-inner { grid-template-columns: minmax(0, 1fr); } }
